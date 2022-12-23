@@ -18,7 +18,11 @@
 
 ## 📏 와이어프레임
 
+![와이어프레임](https://cdn.discordapp.com/attachments/1037267111585792020/1055867403344543754/IMB_XZKGyK.gif)
+
 ## 🛠️Tech Stacks
+
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E.svg?&style=flat&for-the-badge&logo=javascript&logoColor=black)](https://velog.io/@channn02) [![CSS3](https://img.shields.io/badge/CSS3-1572B6.svg?&style=flat&for-the-badge&logo=CSS3&logoColor=white)](https://velog.io/@channn02) [![HTML5](https://img.shields.io/badge/HTML5-E34F26.svg?&style=flat&for-the-badge&logo=HTML5&logoColor=white)](https://velog.io/@channn02) [![Axios](https://img.shields.io/badge/Axios-5A29E4.svg?&style=flat&for-the-badge&logo=Axios&logoColor=white)](https://velog.io/@channn02) [![React](https://img.shields.io/badge/React-61DAFB.svg?&style=flat&for-the-badge&logo=React&logoColor=black)](https://velog.io/@channn02) [![Redux](https://img.shields.io/badge/Redux-764ABC.svg?&style=flat&for-the-badge&logo=Redux&logoColor=black)](https://velog.io/@channn02) [![Sass](https://img.shields.io/badge/Sass-CC6699.svg?&style=flat&for-the-badge&logo=Sass&logoColor=white)](https://velog.io/@channn02) (예정)
 
 ## 👀API
 

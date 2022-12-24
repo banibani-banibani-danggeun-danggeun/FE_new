@@ -2,10 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useInput } from "../lib/utils/useInput";
-import {
-  __postSignup,
-  __checkUserName,
-} from "../redux/config/modules/loginSlice";
+import { __postSignup, __checkUserName } from "../redux/modules/loginSlice";
 
 const SignUp = () => {
   const [username, setUserName] = useInput();
@@ -24,7 +21,7 @@ const SignUp = () => {
       .then((res) => {
         // console.log("signup res: ", res);
         // alert(res.data.msg);
-        localStorage.setItem("id", res.headers.authorization);
+        // localStorage.setItem("id", res.headers.authorization);
         navigate("/login");
       })
       .catch((err) => {

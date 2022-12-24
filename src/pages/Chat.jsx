@@ -119,6 +119,9 @@ const StDiv = styled.div`
       display: flex;
       flex-flow: column nowrap;
       overflow: scroll;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     `}
     ${(props) =>
     props.chat_chat &&

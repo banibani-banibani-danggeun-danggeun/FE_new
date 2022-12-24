@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useInput } from "../lib/utils/useInput";
-import { __postLogin } from "../redux/config/modules/loginSlice";
+import { __postLogin } from "../redux/modules/loginSlice";
 import { Link } from "react-router-dom";
 
 const Login = () => {

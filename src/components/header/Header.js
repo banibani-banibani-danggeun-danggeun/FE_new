@@ -28,25 +28,25 @@ const Header = () => {
           </StSpan>
         </StDiv>
         <StDiv log_sign>
-          <StSpan onClick={() => navigate("/login")}>로그인</StSpan>
+          {/* <StSpan onClick={() => navigate("/login")}>로그인</StSpan> */}
+          {/* 토큰이 있으면 로그아웃으로 버튼 변경(누르면 쿠키삭제) / 토큰 없으면 로그인 버튼 */}
+          {!localStorage.getItem("id") ? (
+            <StSpan onClick={() => navigate("/login")}>로그인</StSpan>
+          ) : (
+            <StSpan
+              onClick={() => {
+                // __postLogout();
+                alert("로그아웃 되었습니다!");
+                localStorage.removeItem("id");
+                navigate("/login");
+              }}
+            >
+              로그아웃
+            </StSpan>
+          )}
           <StSpan onClick={() => navigate("/signup")}>회원가입</StSpan>
         </StDiv>
       </StDiv>
-      {/* 토큰이 있으면 로그아웃으로 버튼 변경(누르면 쿠키삭제) / 토큰 없으면 로그인 버튼 */}
-      {/* {!localStorage.getItem("id") ? (
-          <StSpan onClick={() => navigate("/login")}>Login</StSpan>
-        ) : (
-          <StSpan
-            onClick={() => {
-              // __postLogout();
-              alert("로그아웃 되었습니다!");
-              localStorage.removeItem("id");
-              navigate("/login");
-            }}
-          >
-            Logout
-          </StSpan>
-        )} */}
     </StDiv>
   );
 };

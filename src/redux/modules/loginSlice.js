@@ -1,4 +1,4 @@
-import { apis } from "../../../lib/axios";
+import { apis } from "../../lib/axios";
 
 // id 중복체크
 export const __checkUserName = async (username) => {
@@ -12,7 +12,7 @@ export const __checkUserName = async (username) => {
     // useSweet(1000, "success", "회원가입 성공!");
     return data;
   } catch (error) {
-    alert(error.response.data.msg);
+    alert(error);
     // useSweet(1000, "error", error.response.data.msg);
   }
 };

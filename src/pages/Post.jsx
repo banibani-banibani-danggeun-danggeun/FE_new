@@ -1,5 +1,7 @@
+import styled from "styled-components";
+
 const Post = () => {
-  return <div>글 작성 페이지</div>;
+  return <div>안받기</div>;
 };
 
 export default Post;

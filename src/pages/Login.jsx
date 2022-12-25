@@ -35,7 +35,7 @@ const Login = () => {
         <StAddForm>
           <StRectangle>
             <StInputGroup>
-              <StTitle>회원가입</StTitle>
+              <StTitle>로그인</StTitle>
               <form onSubmit={onSubmitLogin}>
                 <InputLogin>
                   <StFormLabel htmlFor="username">아이디 </StFormLabel>

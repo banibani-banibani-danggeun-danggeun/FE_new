@@ -59,6 +59,9 @@ const Login = () => {
               </form>
               <StLine />
               <Link to="/signup" style={{ textDecoration: "none" }}>
+                <StAddButton3>카카오 로그인</StAddButton3>
+              </Link>
+              <Link to="/signup" style={{ textDecoration: "none" }}>
                 <StAddButton2>회원가입</StAddButton2>
               </Link>
             </StInputGroup>
@@ -159,6 +162,27 @@ const StAddButton2 = styled.button`
     font-weight: 600;
     transform: scale(1.1);
     outline: 3px solid #ff8c00;
+  }
+`;
+
+const StAddButton3 = styled.button`
+  border: none;
+  height: 30px;
+
+  margin: 0 auto;
+  justify-content: center;
+  display: block;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #fee500;
+  width: 150px;
+  color: #000000;
+  font-weight: 600;
+  font-size: 14px;
+  &:hover {
+    font-weight: 600;
+    transform: scale(1.1);
+    outline: 3px solid #fee500;
   }
 `;
 

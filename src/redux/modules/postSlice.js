@@ -58,6 +58,8 @@ export const __addPost = createAsyncThunk(
       // 추가했을 때 새로고침을 해야 내용이 제대로 들어감. -매니저님께 여쭤볼것2
       // data status 코드랑 message가 추가가 되고 새로고침하면 데이터가 제대로 들어감.
       // title 등이 아니라 message 등이 들어감..
+      // 3. 추가할 때 새로고침을 해야만 id값이 생긴다.
+      // 답: data에 title,content,....등이 안들어가고 msg와 status만 있었다. 형식이 잘못됨.
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -75,15 +77,16 @@ export const __deletePost = createAsyncThunk(
       // const data = await axios.delete(
       //   `http://localhost:3002/recipes/${payload}`
       // );
-      console.log("data: ", data.data.msg);
-      alert(data.data.msg);
+      console.log("data: ", data.data);
+      // alert(data.data.msg);
       // if (data.data.statusCode === 400) {
       //   alert(data.data.msg);
       //   return;
       // }
+      console.log("dleltePost:", data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }

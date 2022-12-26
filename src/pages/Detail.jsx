@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { __getIdPost } from "../redux/modules/postSlice";
+import { __getIdPost, __deletePost } from "../redux/modules/postSlice";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -14,6 +14,10 @@ const Detail = () => {
   useEffect(() => {
     dispatch(__getIdPost(Number(id)));
   }, [dispatch, id]);
+
+  const onClickDeletePostHandler = () => {
+    dispatch(__deletePost(id));
+  };
 
   return (
     <div>
@@ -30,7 +34,7 @@ const Detail = () => {
           </Div>
           <Buttons>
             <Rewritebtn>수정</Rewritebtn>
-            <Deletebtn>삭제</Deletebtn>
+            <Deletebtn onClick={onClickDeletePostHandler}>삭제</Deletebtn>
           </Buttons>
         </Wraps>
         <Content>

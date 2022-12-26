@@ -1,19 +1,27 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __getPost } from "../redux/modules/postSlice";
+import { __getList } from "../redux/modules/mainSlice";
 import React from "react";
 import styled from "styled-components";
 import PostingBlock from "../components/main/PostingBlock";
 import Posting from "../components/main/Posting";
 
 const Main = () => {
+  const { isLoading, error, posts } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts.posts);
-  console.log("posts ---> ", posts);
+  //const posts = useSelector((state) => state.posts.posts);
+  // console.log("posts ---> ", posts);
 
   useEffect(() => {
-    dispatch(__getPost());
+    dispatch(__getList());
   }, [dispatch]);
+
+  if (isLoading) {
+    return <div>로딩 중....</div>;
+  }
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   return (
     <StPopularDiv>

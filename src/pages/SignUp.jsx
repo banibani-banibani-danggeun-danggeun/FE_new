@@ -2,12 +2,17 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useInput } from "../lib/utils/useInput";
-import { __postSignup, __checkUserName } from "../redux/modules/loginSlice";
+import {
+  __postSignup,
+  __checkUserName,
+  __checkNickname,
+} from "../redux/modules/loginSlice";
 
 const SignUp = () => {
   const [username, setUserName] = useInput();
   const [password, setPassword] = useInput();
   const [passwordCheck, setPasswordCheck] = useInput();
+  const [nickname, setNickname] = useInput();
 
   const navigate = useNavigate();
 
@@ -15,6 +20,7 @@ const SignUp = () => {
     e.preventDefault();
     __postSignup({
       username,
+      nickname,
       password,
       passwordCheck,
     })
@@ -33,6 +39,14 @@ const SignUp = () => {
   const onCheckUserName = (username) => {
     console.log("username---->", username);
     __checkUserName(username).then((res) => {
+      console.log(res);
+    });
+  };
+
+  // 닉네임 중복 체크 확인
+  const onCheckNickname = (nickname) => {
+    console.log("nickname---->", nickname);
+    __checkNickname(nickname).then((res) => {
       console.log(res);
     });
   };
@@ -60,6 +74,26 @@ const SignUp = () => {
                       checkbtn
                       onClick={() => {
                         onCheckUserName(username);
+                      }}
+                      type="button"
+                    >
+                      중복확인
+                    </StButton>
+                  </StDiv>
+                  <StFormLabel htmlFor="nickname">닉네임 </StFormLabel>
+                  <StDiv checknickname>
+                    <StAddInput
+                      type="text"
+                      id="nickname"
+                      value={nickname}
+                      onChange={setNickname}
+                      placeholder="닉네임을 입력하세요"
+                    />
+
+                    <StButton
+                      checkbtn
+                      onClick={() => {
+                        onCheckNickname(nickname);
                       }}
                       type="button"
                     >

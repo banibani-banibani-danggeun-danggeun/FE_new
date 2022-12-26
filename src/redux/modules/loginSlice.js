@@ -6,8 +6,25 @@ export const __checkUserName = async (username) => {
     const data = await apis.checkUserName(username);
     console.log("username: ", username);
     console.log("data: ", data);
-    if (data.data.statusCode === 200) {
+    if (data.data.statusCode === 400) {
       alert(data.data.msg);
+    }
+    // useSweet(1000, "success", "회원가입 성공!");
+    return data;
+  } catch (error) {
+    alert(error);
+    // useSweet(1000, "error", error.response.data.msg);
+  }
+};
+
+// id 중복체크
+export const __checkNickname = async (nickname) => {
+  try {
+    const data = await apis.checkNickname(nickname);
+    console.log("nickname: ", nickname);
+    console.log("data: ", data);
+    if (data.data.statusCode === 200) {
+      alert("data.data.msg");
     }
     // useSweet(1000, "success", "회원가입 성공!");
     return data;

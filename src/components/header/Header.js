@@ -1,9 +1,16 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { __getChatRoom } from "../../redux/modules/chatSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const chatRoomList = () => {
+    dispatch(__getChatRoom());
+    navigate("/chat");
+  };
   return (
     <StDiv nav_main>
       <div>
@@ -23,7 +30,7 @@ const Header = () => {
           <StSpan cate_txt onClick={() => navigate("/post")}>
             글쓰기
           </StSpan>
-          <StSpan cate_txt onClick={() => navigate("/chat")}>
+          <StSpan cate_txt onClick={chatRoomList}>
             채팅하기
           </StSpan>
         </StDiv>

@@ -1,37 +1,40 @@
 import styled, { css } from "styled-components";
-import ChatList from "../components/chatList/ChatList";
+import { AiOutlinePlus } from "react-icons/ai";
+import { RiSendPlaneFill } from "react-icons/ri";
 
-const Chat = () => {
+const ChatList = () => {
   return (
-    <StDiv chat_box>
-      <StDiv header_chat>
-        <StH2>NickName</StH2>
+    <div>
+      <StDiv chat_list>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
+        <StP my_chat>구매 가능한가요?</StP>
+        <StP you_chat>응 가능</StP>
       </StDiv>
-      <StDiv product_box>
-        <StDiv product_imgtxt>
-          <StImg
-            src="https://manyalittle.shop/web/product/big/202206/6b62c0ea43ce95e59c624e8bc8a6381c.jpg"
-            alt="판매용사진"
-          />
-          <StDiv>
-            <StP product_txt>판매중</StP>
-            <StP product_txt>7,000원</StP>
-          </StDiv>
-        </StDiv>
-        <StDiv>
-          <StP product_title>포켓몬 파이리 인형 25센티</StP>
-        </StDiv>
+      <StDiv chat_chat>
+        <AiOutlinePlus size="30" />
+        <StInput type="text" />
+        <RiSendPlaneFill size="30" />
       </StDiv>
-      <StDiv product_line></StDiv>
-      <StDiv police_line>
-        <StP police_txt>
-          불법사이트 홍보시 사이버 경찰청에 인계처리 됩니다
-          <br />
-          욕설 또는 남을 비방하면 영구제명 대상입니다
-        </StP>
-      </StDiv>
-      <ChatList />
-    </StDiv>
+    </div>
   );
 };
 
@@ -104,15 +107,18 @@ const StDiv = styled.div`
     `}
 `;
 
-const StImg = styled.img`
-  width: 70px;
-  height: 70px;
-  margin: 5px;
-  border-radius: 10px;
-`;
-
-const StH2 = styled.h2`
-  text-align: center;
+const StInput = styled.input`
+  width: 280px;
+  height: 20px;
+  background-color: #46494d;
+  border-radius: 20px;
+  border: 0;
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const StP = styled.p`
@@ -161,4 +167,5 @@ ${(props) =>
       font-size: 13px;
     `}
 `;
-export default Chat;
+
+export default ChatList;

@@ -1,10 +1,98 @@
 import styled, { css } from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { __createChatRoom, __getChatRoom } from "../../redux/modules/chatSlice";
+import { useNavigate } from "react-router-dom";
 
 const ChatList = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // const chatRoomList = () => {
+  //   dispatch(__getChatRoom()).then((res) => console.log(res));
+  //   navigate("/chat");
+  // };
+
+  //   const sock = new SockJS("http://43.200.248.80/ws-stomp");
+  //   const ws = Stomp.over(sock);
+  //   console.log("sock--->", sock);
+  //   console.log("ws--->", ws);
+
+  // const client = Stomp.Client;
+
+  var stompClient = null;
+
+  function connect(temp) {
+    // dispatch(__createChatRoom());
+    alert(temp);
+    // dispatch(__getChatRoom()).then((res) => console.log("res--->", res));
+
+    //var socket = new SockJS("/websock");
+    //var socket = new SockJS("/websock"+temp);
+    const sock = new SockJS("http://43.200.248.80/ws-stomp");
+    //context_path == "/SupportCenter"
+    stompClient = Stomp.over(sock);
+    // stompClient.ws.url = "http://localhost:3000/chat/"
+    stompClient.connect(
+      {},
+      function (frame) {
+        console.log("Connected :- " + frame);
+        stompClient.subscribe("/chat/rooms", function (notifications) {
+          alert(notifications);
+        });
+      },
+      function (error) {
+        alert(error);
+      }
+    );
+    // alert();
+    console.log("stompClient--->", stompClient);
+    getNotifications();
+  }
+
+  function getNotifications() {
+    stompClient.send("/chat/rooms", {}, "Hiiiiii");
+  }
+
+  // const connect = () => {
+  //   ws.onConnect({}, (frame) => {
+  //     ws.subscribe('/chat/rooms', () => {
+  //       const parsed = JSON.parse()
+  //     })
+  //   })
+  // }
+
+  useEffect(() => {
+    dispatch(__getChatRoom()).then((res) => console.log(res));
+    // dispatch(__createChatRoom());
+  }, [dispatch]);
+
+  //   const chatRoomList = () => {
+  //     dispatch(__createChatRoom());
+  //     navigate("/chat");
+  //   };
+
   return (
     <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          connect();
+        }}
+      >
+        <label htmlFor="roomname" />
+        <input
+          type="text"
+          id="roomname"
+          onChange={(e) => e.target.value}
+          placeholder="채팅방 이름을 입력하세요"
+        />
+        <button>채팅방 개설</button>
+      </form>
       <StDiv chat_list>
         <StP my_chat>구매 가능한가요?</StP>
         <StP you_chat>응 가능</StP>

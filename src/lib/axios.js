@@ -21,7 +21,7 @@ export const baseURL = axios.create({
 });
 
 export const chatURL = axios.create({
-  baseURL: "http://43.200.248.80",
+  baseURL: "http://43.200.248.80/ws-stomp",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",

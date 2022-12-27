@@ -58,9 +58,13 @@ const Login = () => {
                 </StButton>
               </form>
               <StLine />
-              <Link to="/signup" style={{ textDecoration: "none" }}>
+              <StA
+                href="https://accounts.kakao.com/login/?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fresponse_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8080%252Fapi%252Fuser%252Fkakao%252Fcallback%26through_account%3Dtrue%26client_id%3Dd6c5b10cf544ae8fcc0cbb0bbc530328"
+                target="_blank"
+                style={{ textDecoration: "none" }}
+              >
                 <StAddButton3>카카오 로그인</StAddButton3>
-              </Link>
+              </StA>
               <Link to="/signup" style={{ textDecoration: "none" }}>
                 <StAddButton2>회원가입</StAddButton2>
               </Link>
@@ -202,5 +206,7 @@ const StLine = styled.hr`
 const StRectangle = styled.div`
   width: 190px;
 `;
+
+const StA = styled.a``;
 
 export default Login;

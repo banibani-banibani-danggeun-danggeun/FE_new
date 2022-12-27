@@ -1,23 +1,45 @@
 import styled from "styled-components";
-import { __getIdPost, __deletePost } from "../redux/modules/postSlice";
+import { __getPost, __deletePost } from "../redux/modules/postSlice";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { useState } from "react";
 const Detail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const details = useSelector((state) => state.posts.posts);
   console.log("details:", details);
+  const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(__getIdPost(Number(id)));
+    if (localStorage.getItem("id") !== null) {
+      setIsLogin(true);
+    }
+    dispatch(__getPost(Number(id)));
   }, [dispatch, id]);
 
   const onClickDeletePostHandler = () => {
-    dispatch(__deletePost(id));
+    if (isLogin === true) {
+      dispatch(__deletePost(id));
+    } else {
+      alert("로그인 후 이용 가능합니다.");
+    }
   };
+
+  const onClickEditPostHandler = (nickname) => {
+    if (isLogin === true) {
+      if (nickname === localStorage.getItem("nickname")) {
+        navigate(`/editpost/${id}`);
+      } else {
+        alert("타인의 게시물을 수정할 수 없습니다.");
+      }
+    } else {
+      alert("로그인 후 이용 가능합니다.");
+    }
+  };
+  console.log("isLogin:", isLogin);
 
   return (
     <div>
@@ -27,13 +49,13 @@ const Detail = () => {
           <Div>
             <Nickimg src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png" />
             <Nickname>
-              <p>파라밤</p>
+              <p>{details.nickname}</p>
             </Nickname>
             <Address>{details.location}</Address>
             <Temperateimg src="https://cdn.discordapp.com/attachments/1047386886269829182/1056254271278043136/KakaoTalk_20221224_185732752.png"></Temperateimg>
           </Div>
           <Buttons>
-            <Rewritebtn>수정</Rewritebtn>
+            <Rewritebtn onClick={onClickEditPostHandler}>수정</Rewritebtn>
             <Deletebtn onClick={onClickDeletePostHandler}>삭제</Deletebtn>
           </Buttons>
         </Wraps>

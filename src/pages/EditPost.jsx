@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { __addPost } from "../redux/modules/postSlice";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { __editPost, __getPost } from "../redux/modules/postSlice";
 
 const EditPost = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [addPost, setAddPost] = useState({
+
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
+  const [content, setContent] = useState("");
+  const [location, setLocation] = useState("");
+  const [price, setPrice] = useState("");
+  const { id } = useParams();
+
+  const [editPost, setEditPost] = useState({
     title: "",
     image: "",
     content: "",
@@ -15,11 +23,47 @@ const EditPost = () => {
     price: "",
   });
 
-  const onClickAddPostHandler = (e) => {
-    e.preventDefault();
-    dispatch(__addPost(addPost));
-    navigate(`/`); //post 후 detail로 넘어가게 하기
+  const onClickEditPostHandler = () => {
+    const newPost = {
+      title: title,
+      image: image,
+      content: content,
+      location: location,
+      price: price,
+    };
+    if (newPost.title === "") {
+      alert("제목을 입력해주세요.");
+    } else if (newPost.image === "") {
+      alert("URL을 입력해주세요.");
+    } else if (newPost.location === undefined) {
+      alert("지역을 입력해주세요.");
+    } else if (newPost.price === "") {
+      alert("가격을 입력해주세요.");
+    } else if (newPost.content === "") {
+      alert("내용을 입력해주세요.");
+    } else {
+      dispatch(__editPost([newPost, id]));
+    }
+
+    // dispatch(__editPost([newPost, id]));
+    // navigate(`/`); //post 후 detail로 넘어가게 하기
   };
+
+  const selected = useSelector((state) => state.post);
+
+  useEffect(() => {
+    dispatch(__getPost(Number(id)));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (selected) {
+      setTitle(selected.title);
+      setImage(selected.image);
+      setContent(selected.content);
+      setLocation(selected.location);
+      setPrice(selected.price);
+    }
+  }, [selected]);
 
   return (
     <Wrap>
@@ -28,41 +72,46 @@ const EditPost = () => {
         <Titleinput
           type="text"
           placeholder="제목"
+          value={title}
           onChange={(e) => {
-            setAddPost({ ...addPost, title: e.target.value });
+            setTitle(e.target.value);
           }}
         />
         <Imginput
           type="text"
           placeholder="image URL"
+          value={image}
           onChange={(e) => {
-            setAddPost({ ...addPost, image: e.target.value });
+            setImage(e.target.value);
           }}
         />
         <Addressinput
           type="text"
           placeholder="거래 희망 장소"
+          value={location}
           onChange={(e) => {
-            setAddPost({ ...addPost, location: e.target.value });
+            setLocation(e.target.value);
           }}
         />
         <Priceinput
           type="number"
           placeholder="가격"
+          value={price}
           onChange={(e) => {
-            setAddPost({ ...addPost, price: e.target.value });
+            setPrice(e.target.value);
           }}
         />
-        <Contentinput
+        <Contenttextarea
           type="text"
           placeholder="게시글 내용을 작성해주세요.(가품 및 판매 금지 물품은 게시가 제한될 수 있어요.)"
+          value={content}
           onChange={(e) => {
-            setAddPost({ ...addPost, content: e.target.value });
+            setContent(e.target.value);
           }}
         />
       </Inputs>
       <Btns>
-        <Addbtn onClick={onClickAddPostHandler}>추가</Addbtn>
+        <Addbtn onClick={onClickEditPostHandler}>추가</Addbtn>
         <Movebtn>이전</Movebtn>
       </Btns>
     </Wrap>
@@ -120,7 +169,7 @@ const Priceinput = styled.input`
   font-size: 20px;
   outline: none;
 `;
-const Contentinput = styled.textarea`
+const Contenttextarea = styled.textarea`
   width: 600px;
   height: 200px;
   border-radius: 15px;

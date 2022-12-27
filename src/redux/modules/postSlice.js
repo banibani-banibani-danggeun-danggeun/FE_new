@@ -83,7 +83,7 @@ export const __deletePost = createAsyncThunk(
       //   alert(data.data.msg);
       //   return;
       // }
-      console.log("dleltePost:", data);
+      console.log("deletePost:", data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       // console.log(err);
@@ -97,9 +97,9 @@ export const __editPost = createAsyncThunk(
   "editPost",
   async (payload, thunkAPI) => {
     try {
-      const { id, formdata } = payload;
+      const { id, newPost } = payload;
       console.log("payload:::::: ", payload);
-      const data = await apis.editPost(id, formdata);
+      const data = await apis.editPost(id, newPost);
       // const data = await axios.patch(
       //   `http://localhost:3002/recipes/${recipeId}`,
       //   recipe
@@ -230,7 +230,9 @@ export const postSlice = createSlice({
       // 미들웨어를 통해 받은 action값이 무엇인지 항상 확인한다
       console.log("action: ", action.payload);
       state.isLoading = false;
-      state.posts = state.posts?.filter((post) => post.id !== action.payload);
+      state.posts = Array.state.posts.filter(
+        (post) => post.id !== action.payload
+      );
       console.log("state------>", state.posts);
     },
     [__deletePost.rejected]: (state, action) => {
@@ -252,8 +254,9 @@ export const postSlice = createSlice({
               ...post,
               title: action.payload.data.title,
               content: action.payload.data.content,
-              imageurl: action.payload.data.imageurl,
-              category: action.payload.data.category,
+              image: action.payload.data.image,
+              location: action.payload.data.location,
+              price: action.payload.data.price,
             }
           : post
       );

@@ -1,37 +1,46 @@
 import styled, { css } from "styled-components";
+import ChatMessage from "../components/chatList/ChatMessage";
 import ChatList from "../components/chatList/ChatList";
+import ChatTest from "../components/chatList/ChatTest";
+// import Stomp from "stompjs";
 
 const Chat = () => {
   return (
-    <StDiv chat_box>
-      <StDiv header_chat>
-        <StH2>NickName</StH2>
-      </StDiv>
-      <StDiv product_box>
-        <StDiv product_imgtxt>
-          <StImg
-            src="https://manyalittle.shop/web/product/big/202206/6b62c0ea43ce95e59c624e8bc8a6381c.jpg"
-            alt="판매용사진"
-          />
+    <div>
+      <div>
+        <ChatTest />
+        <ChatMessage />
+      </div>
+      <StDiv chat_box>
+        <StDiv header_chat>
+          <StH2>NickName</StH2>
+        </StDiv>
+        <StDiv product_box>
+          <StDiv product_imgtxt>
+            <StImg
+              src="https://manyalittle.shop/web/product/big/202206/6b62c0ea43ce95e59c624e8bc8a6381c.jpg"
+              alt="판매용사진"
+            />
+            <StDiv>
+              <StP product_txt>판매중</StP>
+              <StP product_txt>7,000원</StP>
+            </StDiv>
+          </StDiv>
           <StDiv>
-            <StP product_txt>판매중</StP>
-            <StP product_txt>7,000원</StP>
+            <StP product_title>포켓몬 파이리 인형 25센티</StP>
           </StDiv>
         </StDiv>
-        <StDiv>
-          <StP product_title>포켓몬 파이리 인형 25센티</StP>
+        <StDiv product_line></StDiv>
+        <StDiv police_line>
+          <StP police_txt>
+            불법사이트 홍보시 사이버 경찰청에 인계처리 됩니다
+            <br />
+            욕설 또는 남을 비방하면 영구제명 대상입니다
+          </StP>
         </StDiv>
+        {/* <ChatList /> */}
       </StDiv>
-      <StDiv product_line></StDiv>
-      <StDiv police_line>
-        <StP police_txt>
-          불법사이트 홍보시 사이버 경찰청에 인계처리 됩니다
-          <br />
-          욕설 또는 남을 비방하면 영구제명 대상입니다
-        </StP>
-      </StDiv>
-      <ChatList />
-    </StDiv>
+    </div>
   );
 };
 

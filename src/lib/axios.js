@@ -50,6 +50,7 @@ export const apis = {
   postLogin: (login) => instance.post("/user/login", login),
   postSignup: (signup) => instance.post("/user/signup", signup),
   checkUserName: (username) => instance.get(`/user/idcheck/${username}`),
+  checkNickname: (nickname) => instance.get(`/user/nicknamecheck/${nickname}`),
 
   // 게시글 관련
   getPost: () => baseURL.get("/post"),

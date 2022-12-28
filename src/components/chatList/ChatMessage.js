@@ -30,7 +30,7 @@ const ChatMessage = () => {
   };
 
   const findRoom = () => {
-    axios.get(`/chat/room/70bb6a7b-2aa9-40cd-889d-955abdb2e692`).then((res) => {
+    axios.get(`/chat/room/${data.roomId}`).then((res) => {
       console.log("findRoom res--->", res);
       data.room = res.data;
     });

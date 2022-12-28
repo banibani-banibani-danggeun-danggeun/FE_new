@@ -24,39 +24,39 @@ const ChatList = () => {
 
   // const client = Stomp.Client;
 
-  var stompClient = null;
+  // var stompClient = null;
 
-  function connect(temp) {
-    // dispatch(__createChatRoom());
-    alert(temp);
-    // dispatch(__getChatRoom()).then((res) => console.log("res--->", res));
+  // function connect(temp) {
+  //   // dispatch(__createChatRoom());
+  //   alert(temp);
+  //   // dispatch(__getChatRoom()).then((res) => console.log("res--->", res));
 
-    //var socket = new SockJS("/websock");
-    //var socket = new SockJS("/websock"+temp);
-    const sock = new SockJS("http://43.200.248.80/ws-stomp");
-    //context_path == "/SupportCenter"
-    stompClient = Stomp.over(sock);
-    // stompClient.ws.url = "http://localhost:3000/chat/"
-    stompClient.connect(
-      {},
-      function (frame) {
-        console.log("Connected :- " + frame);
-        stompClient.subscribe("/chat/rooms", function (notifications) {
-          alert(notifications);
-        });
-      },
-      function (error) {
-        alert(error);
-      }
-    );
-    // alert();
-    console.log("stompClient--->", stompClient);
-    getNotifications();
-  }
+  //   //var socket = new SockJS("/websock");
+  //   //var socket = new SockJS("/websock"+temp);
+  //   const sock = new SockJS("http://43.200.248.80/ws-stomp");
+  //   //context_path == "/SupportCenter"
+  //   stompClient = Stomp.over(sock);
+  //   // stompClient.ws.url = "http://localhost:3000/chat/"
+  //   stompClient.connect(
+  //     {},
+  //     function (frame) {
+  //       console.log("Connected :- " + frame);
+  //       stompClient.subscribe("/chat/rooms", function (notifications) {
+  //         alert(notifications);
+  //       });
+  //     },
+  //     function (error) {
+  //       alert(error);
+  //     }
+  //   );
+  //   // alert();
+  //   console.log("stompClient--->", stompClient);
+  //   getNotifications();
+  // }
 
-  function getNotifications() {
-    stompClient.send("/chat/rooms", {}, "Hiiiiii");
-  }
+  // function getNotifications() {
+  //   stompClient.send("/chat/rooms", {}, "Hiiiiii");
+  // }
 
   // const connect = () => {
   //   ws.onConnect({}, (frame) => {
@@ -81,7 +81,7 @@ const ChatList = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          connect();
+          // connect();
         }}
       >
         <label htmlFor="roomname" />

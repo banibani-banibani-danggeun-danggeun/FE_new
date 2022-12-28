@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { __createRoom } from "../redux/modules/chatSlice";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,12 @@ const Detail = () => {
     //}
   };
   console.log("isLogin:", isLogin);
+
+  const createRoom = (postId) => {
+    dispatch(__createRoom(postId));
+    navigate("/chat");
+  };
+
   return (
     <div>
       <Wrap>
@@ -74,6 +81,7 @@ const Detail = () => {
               <Price>{details.price}</Price>
               <Explain>{details.content}</Explain>
               <Etc>관심3 / 채팅19 / 조회 200</Etc>
+              <button onClick={() => createRoom(details.id)}>채팅하기</button>
             </Contents>
           </Wraping>
         </Content>

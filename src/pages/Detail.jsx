@@ -37,7 +37,7 @@ const Detail = () => {
   const onClickEditPostHandler = (nickname) => {
     //if (isLogin === true) {
     //if (nickname === localStorage.getItem("nickname")) {
-    //localStorage.getItem = key(nickname)로부터 data 읽기
+    ////localStorage.getItem = key(nickname)로부터 data 읽기
     navigate(`/editpost/${id}`);
     //} else {
     //alert("타인의 게시물을 수정할 수 없습니다.");

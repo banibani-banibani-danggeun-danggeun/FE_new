@@ -17,8 +17,22 @@ const Post = () => {
 
   const onClickAddPostHandler = (e) => {
     e.preventDefault();
-    dispatch(__addPost(addPost));
-    navigate(`/`); //post 후 detail로 넘어가게 하기
+    if (addPost.title === "") {
+      alert("제목을 입력해주세요.");
+    } else if (addPost.image === "") {
+      alert("URL을 입력해주세요.");
+    } else if (addPost.location === "") {
+      alert("지역을 입력해주세요.");
+    } else if (addPost.price === "") {
+      alert("가격을 입력해주세요.");
+    } else if (addPost.content === "") {
+      alert("내용을 입력해주세요.");
+    } else {
+      dispatch(__addPost(addPost));
+      navigate(`/`);
+    }
+    // dispatch(__addPost(addPost));
+    //navigate(`/`); //post 후 detail로 넘어가게 하기
   };
 
   return (

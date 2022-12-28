@@ -6,10 +6,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { __createRoom } from "../redux/modules/chatSlice";
+
 const Detail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const details = useSelector((state) => state.posts.posts);
+  const details = useSelector((state) => state.posts.detail);
   console.log("details:", details);
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
@@ -20,25 +21,31 @@ const Detail = () => {
     }
     dispatch(__getIdPost(Number(id)));
   }, [dispatch, id]);
+  // 12번에서 details에 대한 edit은 지정해주지 않아서 수정이 바로 되지 않음.
+  // 새로고침했을 때 수정이 되는 이유는 22번의 dispatch 때문.
+  // postslice에 details가 수정됬을 때의 경우를 넣어줌.(296-303)
 
   const onClickDeletePostHandler = () => {
     if (isLogin === true) {
       dispatch(__deletePost(id));
+      alert("삭제 완료되었습니다.");
+      navigate(`/`);
     } else {
       alert("로그인 후 이용 가능합니다.");
     }
   };
 
   const onClickEditPostHandler = (nickname) => {
-    if (isLogin === true) {
-      if (nickname === localStorage.getItem("nickname")) {
-        navigate(`/editpost/${id}`);
-      } else {
-        alert("타인의 게시물을 수정할 수 없습니다.");
-      }
-    } else {
-      alert("로그인 후 이용 가능합니다.");
-    }
+    //if (isLogin === true) {
+    //if (nickname === localStorage.getItem("nickname")) {
+    //localStorage.getItem = key(nickname)로부터 data 읽기
+    navigate(`/editpost/${id}`);
+    //} else {
+    //alert("타인의 게시물을 수정할 수 없습니다.");
+    //}
+    //} else {
+    //alert("로그인 후 이용 가능합니다.");
+    //}
   };
   console.log("isLogin:", isLogin);
 
@@ -51,6 +58,7 @@ const Detail = () => {
     <div>
       <Wrap>
         <Imgarea src={details.image} />
+
         <Wraps>
           <Div>
             <Nickimg src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png" />

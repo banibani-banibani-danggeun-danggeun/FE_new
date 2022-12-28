@@ -36,7 +36,7 @@ const Main = () => {
     setLoad(true);
     const res = await axios({
       method: "GET",
-      url: `http://api.jaeha.shop/api/post`,
+      url: `http://13.209.173.113/api/post`,
     });
     if (res.data) {
       setList((prev) => [...new Set([...prev, ...res.data])]); //리스트 추가

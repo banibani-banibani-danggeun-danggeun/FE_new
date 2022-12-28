@@ -1,50 +1,93 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import React from "react";
+import axios from "axios";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import PostingBlock from "../components/main/PostingBlock";
-import { __getPost } from "../redux/modules/postSlice";
-import { Link } from "react-router-dom";
 
 const Main = () => {
-  const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts.posts);
-  console.log("posts ---> ", posts);
+
+  const [list, setList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [load, setLoad] = useState(1);
+  const preventRef = useRef(true);
+  const obsRef = useRef(null);
 
   useEffect(() => {
-    dispatch(__getPost());
-  }, [dispatch]);
+    getList();
+    const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
+    if (obsRef.current) observer.observe(obsRef.current);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+
+
+  useEffect(() => {
+    getList();
+  }, [page]);
+
+  const obsHandler = (entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && preventRef.current) {
+      preventRef.current = false;
+      setPage((prev) => prev + 1);
+    }
+  };
+
+  const getList = useCallback(async () => {
+    setLoad(true);
+    const res = await axios({
+      method: "GET",
+      url: `http://13.209.173.113/api/post`,
+    });
+    if (res.data) {
+      setList((prev) => [...new Set([...prev, ...res.data])]); //리스트 추가
+      preventRef.current = true;
+    } else {
+      console.log(res);
+    }
+    setLoad(false);
+  }, [page]);
 
   return (
-    <StPopularDiv>
-      <Wrapper>
-        <StMainTitle>중고거래 인기매물</StMainTitle>
-        <div className="postlist">
-          {posts?.map((post) => {
-            return (
-              <StCardsWrap key={post.id}>
-                <Link to={`/detail/${post.id}`} className="detail">
-                  <div className="card-photo">
-                    <img src={post.image} alt="item" />
-                  </div>
-                  <div className="card-desc">
-                    <h2 className="card-title">{post.title}</h2>
-                    <div className="card-price">{post.price}</div>
-                    <div className="card-region">{post.location}</div>
-                    <div className="card-region">{post.nickname}</div>
-                    <div className="card-counts">
-                      <span>관심 10</span>
-                      <span>채팅 3</span>
-                    </div>
-                  </div>
-                </Link>
-              </StCardsWrap>
-            );
-          })}
-          ;
-        </div>
-      </Wrapper>
-    </StPopularDiv>
+    <>
+      <StPopularDiv>
+        <Wrapper>
+          <StMainTitle>중고거래 인기매물</StMainTitle>
+          <div className="postlist">
+            {list && (
+              <>
+                {list?.map((post) => {
+                  return (
+                    <StCardsWrap key={post.id}>
+                      <Link to={`/detail/${post.id}`} className="detail">
+                        <div className="card-photo">
+                          <img src={post.image} alt="item" />
+                        </div>
+                        <div className="card-desc">
+                          <h2 className="card-title">{post.title}</h2>
+                          <div className="card-price">{post.price}원</div>
+                          <div className="card-region">{post.location}</div>
+                          <div className="card-region">{post.nickname}</div>
+                          <div className="card-counts">
+                            <span>관심 10</span>
+                            <span>채팅 3</span>
+                          </div>
+                        </div>
+                      </Link>
+                    </StCardsWrap>
+                  );
+                })}
+                ; ;
+              </>
+            )}
+            {load ? <div> 당근당근! 로딩 중</div> : <></>}
+            <div ref={obsRef}></div>
+          </div>
+        </Wrapper>
+      </StPopularDiv>
+    </>
   );
 };
 

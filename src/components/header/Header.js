@@ -39,6 +39,7 @@ const Header = () => {
                 // __postLogout();
                 alert("로그아웃 되었습니다!");
                 localStorage.removeItem("id");
+                localStorage.removeItem("nickname");
                 navigate("/login");
               }}
             >

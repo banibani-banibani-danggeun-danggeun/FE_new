@@ -1,16 +1,14 @@
 import styled, { css } from "styled-components";
-import ChatMessage from "../components/chatList/ChatMessage";
-import ChatList from "../components/chatList/ChatList";
+// import ChatMessage from "../components/chatList/ChatMessage";
+// import ChatList from "../components/chatList/ChatList";
 import ChatTest from "../components/chatList/ChatTest";
 // import Stomp from "stompjs";
 
 const Chat = () => {
   return (
     <div>
-      <div>
-        <ChatTest />
-        <ChatMessage />
-      </div>
+      <div></div>
+      {/* <ChatMessage /> */}
       <StDiv chat_box>
         <StDiv header_chat>
           <StH2>NickName</StH2>
@@ -39,6 +37,9 @@ const Chat = () => {
           </StP>
         </StDiv>
         {/* <ChatList /> */}
+        <div>
+          <ChatTest />
+        </div>
       </StDiv>
     </div>
   );

@@ -8,6 +8,23 @@ const initialState = {
   error: null,
 };
 
+export const __createRoom = createAsyncThunk(
+  "createRoom",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.createRoom(payload);
+      // const data = await axios.get(`http://localhost:3002/recipes/${payload}`);
+      console.log("payload: ", payload); //id값이 숫자로 출력되야함
+      console.log("creatRoom data: ", data);
+      // const getId = data.data.filter((recipe) => recipe.id === payload)[0];
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 // 채팅방 목록 조회
 export const __getChatRoom = createAsyncThunk(
   "getChatRoom",
@@ -18,20 +35,20 @@ export const __getChatRoom = createAsyncThunk(
       console.log("payload: ", payload); //id값이 숫자로 출력되야함
       console.log("getIddata:: ", data);
       // const getId = data.data.filter((recipe) => recipe.id === payload)[0];
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(data.data); // 필요한 최소한의 정보만 넣어줘야함
     } catch (err) {
       console.log(err);
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.error.message);
     }
   }
 );
 
 // 채팅방 생성
 export const __createChatRoom = createAsyncThunk(
-  "chatRoom",
+  "createChatRoom",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.chatCreate();
+      const data = await apis.createRoom();
       console.log("payload: ", payload);
       console.log("data: ", data.data);
       return thunkAPI.fulfillWithValue(data.data);
@@ -43,20 +60,16 @@ export const __createChatRoom = createAsyncThunk(
   }
 );
 
-// 데이터 추가
-export const __addPost = createAsyncThunk(
-  "addPost",
+// 채팅방 들어가기
+export const __enterRoom = createAsyncThunk(
+  "enterRoom",
   async (payload, thunkAPI) => {
     try {
-      console.log("payload:::", typeof payload.price);
-      const data = await apis.createPost(payload);
-      // const data = await axios.post("http://localhost:3002/recipes", payload);
+      console.log("payload:::", payload);
+      const data = await apis.enterRoom(payload);
       console.log("payload: ", payload);
       console.log("createPost::: ", data);
       return thunkAPI.fulfillWithValue(payload);
-      // 추가했을 때 새로고침을 해야 내용이 제대로 들어감. -매니저님께 여쭤볼것2
-      // data status 코드랑 message가 추가가 되고 새로고침하면 데이터가 제대로 들어감.
-      // title 등이 아니라 message 등이 들어감..
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -64,43 +77,13 @@ export const __addPost = createAsyncThunk(
   }
 );
 
-// 데이터 삭제
-export const __deletePost = createAsyncThunk(
-  "deletePost",
+// 채팅방 조회
+export const __findRoom = createAsyncThunk(
+  "findRoom",
   async (payload, thunkAPI) => {
     try {
       console.log("payload: ", payload);
-      const data = await apis.deletePost(payload);
-      // const data = await axios.delete(
-      //   `http://localhost:3002/recipes/${payload}`
-      // );
-      console.log("data: ", data.data.msg);
-      alert(data.data.msg);
-      // if (data.data.statusCode === 400) {
-      //   alert(data.data.msg);
-      //   return;
-      // }
-      return thunkAPI.fulfillWithValue(payload);
-    } catch (err) {
-      console.log(err);
-      return thunkAPI.rejectWithValue(err);
-    }
-  }
-);
-
-// 데이터 수정
-export const __editPost = createAsyncThunk(
-  "editPost",
-  async (payload, thunkAPI) => {
-    try {
-      const { id, formdata } = payload;
-      console.log("payload:::::: ", payload);
-      const data = await apis.editPost(id, formdata);
-      // const data = await axios.patch(
-      //   `http://localhost:3002/recipes/${recipeId}`,
-      //   recipe
-      // );
-
+      const data = await apis.findRoom(payload);
       console.log("data: ", data.data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
@@ -115,13 +98,30 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // 채팅방 생성
+    [__createRoom.pending]: (state) => {
+      state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
+    },
+    [__createRoom.fulfilled]: (state, action) => {
+      state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
+      state.chats = action.payload.data; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+      // console.log("action.payload: ", action.payload);
+      // console.log("state.posts: ", state.posts);
+    },
+    [__createRoom.rejected]: (state, action) => {
+      state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
+      state.error = action.payload;
+      console.log(action.payload);
+      // catch 된 error 객체를 state.error에 넣습니다.
+    },
+
     // 채팅방 목록 조회
     [__getChatRoom.pending]: (state) => {
       state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
     },
     [__getChatRoom.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-      state.posts = action.payload.data; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+      state.chats = action.payload.data; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
       // console.log("action.payload: ", action.payload);
       // console.log("state.posts: ", state.posts);
     },
@@ -149,61 +149,36 @@ export const chatSlice = createSlice({
       // catch 된 error 객체를 state.error에 넣습니다.
     },
 
-    // 레시피 추가
-    [__addPost.pending]: (state) => {
+    // 채팅방 들어가기
+    [__enterRoom.pending]: (state) => {
       state.isLoading = true;
     },
-    [__addPost.fulfilled]: (state, action) => {
+    [__enterRoom.fulfilled]: (state, action) => {
       // 액션으로 받은 값 = payload 추가해준다.
       console.log("action: ", action.payload);
       state.isLoading = false;
       // state.posts = [...state.posts, action.payload];
-      state.posts.push(action.payload);
+      state.chats = action.payload;
       console.log("action:: ", action.payload);
     },
-    [__addPost.rejected]: (state, action) => {
+    [__enterRoom.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
       console.log(action.payload);
     },
 
     // 게시글 삭제 ------------------
-    [__deletePost.pending]: (state) => {
+    [__findRoom.pending]: (state) => {
       state.isLoading = true;
     },
-    [__deletePost.fulfilled]: (state, action) => {
+    [__findRoom.fulfilled]: (state, action) => {
       // 미들웨어를 통해 받은 action값이 무엇인지 항상 확인한다
       console.log("action: ", action.payload);
       state.isLoading = false;
-      state.posts = state.posts?.filter((post) => post.id !== action.payload);
-      console.log("state------>", state.posts);
+      state.chats = action.payload;
+      console.log("action:: ", action.payload);
     },
-    [__deletePost.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-
-    // 레시피 수정
-    [__editPost.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__editPost.fulfilled]: (state, action) => {
-      // console.log('state-store값',state.diary)
-      console.log("action-서버값", action);
-      state.isLoading = false;
-      state.posts = state.posts.map((post) =>
-        post.id === action.payload.id
-          ? {
-              ...post,
-              title: action.payload.data.title,
-              content: action.payload.data.content,
-              imageurl: action.payload.data.imageurl,
-              category: action.payload.data.category,
-            }
-          : post
-      );
-    },
-    [__editPost.rejected]: (state, action) => {
+    [__findRoom.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

@@ -108,6 +108,7 @@ const Post = () => {
                   size="40"
                   color="white"
                   onClick={() => navigate("/")}
+                  cursor="pointer"
                 />
                 <VscCircleLargeOutline
                   className="icon"
@@ -135,7 +136,7 @@ const Wrap = styled.div`
   justify-content: center;
 `;
 const Phone = styled.div`
-  border: 1px solid red;
+  //border: 1px solid red;
   border-radius: 20px;
   background-color: #212123;
   width: 520px;
@@ -160,6 +161,7 @@ const Titleinput = styled.input`
   margin-bottom: 30px;
   font-size: 20px;
   outline: none;
+  border: none;
 `;
 const Imginput = styled.input`
   width: 450px;
@@ -168,6 +170,7 @@ const Imginput = styled.input`
   margin-bottom: 30px;
   font-size: 20px;
   outline: none;
+  border: none;
 `;
 const Addressinput = styled.input`
   width: 450px;
@@ -176,6 +179,7 @@ const Addressinput = styled.input`
   margin-bottom: 30px;
   font-size: 20px;
   outline: none;
+  border: none;
 `;
 const Priceinput = styled.input`
   width: 450px;
@@ -184,15 +188,17 @@ const Priceinput = styled.input`
   margin-bottom: 30px;
   font-size: 20px;
   outline: none;
+  border: none;
 `;
 const Contentinput = styled.textarea`
   width: 450px;
-  height: 200px;
+  height: 220px;
   border-radius: 15px;
   margin-bottom: 20px;
   font-size: 20px;
   outline: none;
   resize: none;
+  border: none;
 `;
 const Btns = styled.div`
   display: flex;
@@ -212,6 +218,7 @@ const Addbtn = styled.button`
   cursor: pointer;
   &:hover {
     border: 3px solid white;
+    font-weight: bold;
   }
 `;
 const Underline = styled.div`

@@ -14,7 +14,8 @@ export const __checkUserName = async (username) => {
     return data;
   } catch (error) {
     console.log(error);
-    Swal.fire("Error", error.response.data.msg, "error");
+    Swal.fire("Error", "이미 사용중인 아이디입니다", "error");
+    // Swal.fire("Error", error.response.data.msg, "error");
     // alert(error);
     // useSweet(1000, "error", error.response.data.msg);
   }

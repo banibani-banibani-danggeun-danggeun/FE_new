@@ -66,6 +66,13 @@ const Detail = () => {
   return (
     <div>
       <Wrap>
+        {details.nickname === localStorage.getItem("nickname") ? (
+          <Buttons>
+            <Rewritebtn onClick={onClickEditPostHandler}>수정</Rewritebtn>
+            <Deletebtn onClick={onClickDeletePostHandler}>삭제</Deletebtn>
+          </Buttons>
+        ) : null}
+        {/* 내가 추가한 게시물에서만 수정,삭제 버튼이 나오게 함. 삼항연산자 사용 */}
         <Imgarea src={details.image} />
 
         <Wraps>
@@ -77,13 +84,7 @@ const Detail = () => {
               </Nickname>
               <Address>{details.location}</Address>
             </Mine>
-            {details.nickname === localStorage.getItem("nickname") ? (
-              <Buttons>
-                <Rewritebtn onClick={onClickEditPostHandler}>수정</Rewritebtn>
-                <Deletebtn onClick={onClickDeletePostHandler}>삭제</Deletebtn>
-              </Buttons>
-            ) : null}
-            {/* 내가 추가한 게시물에서만 수정,삭제 버튼이 나오게 함. 삼항연산자 사용 */}
+
             <Temperateimg src="https://cdn.discordapp.com/attachments/1047386886269829182/1056254271278043136/KakaoTalk_20221224_185732752.png"></Temperateimg>
           </Div>
         </Wraps>
@@ -185,7 +186,7 @@ const Address = styled.p`
 const Temperateimg = styled.img`
   width: 200px;
   height: 80px;
-  margin-left: -10px;
+  margin-left: 100px;
 `;
 const Div = styled.div`
   display: flex;
@@ -218,7 +219,9 @@ const Deletebtn = styled.button`
   cursor: pointer;
 `;
 const Buttons = styled.div`
-  margin-top: 30px;
+  margin-left: 750px;
+  margin-top: 50px;
+  margin-bottom: 10px;
 `;
 const Content = styled.div`
   display: flex;

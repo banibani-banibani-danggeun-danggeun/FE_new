@@ -36,7 +36,7 @@ const Main = () => {
     setLoad(true);
     const res = await axios({
       method: "GET",
-      url: `http://13.209.173.113/api/post`,
+      url: `http://api.jaeha.shop/api/post`,
     });
     if (res.data) {
       setList((prev) => [...new Set([...prev, ...res.data])]); //리스트 추가
@@ -76,7 +76,6 @@ const Main = () => {
                     </StCardsWrap>
                   );
                 })}
-                ; ;
               </>
             )}
             {load ? <div> 당근당근! 로딩 중</div> : <></>}

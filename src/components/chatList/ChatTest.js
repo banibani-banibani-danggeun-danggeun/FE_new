@@ -14,7 +14,7 @@ const ChatTest = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const socket = new sockJS("http://43.200.248.80/ws-stomp");
+  const socket = new sockJS("https://jong-10.shop/ws-stomp");
   const ws = Stomp.over(socket);
 
   const chats = useSelector((state) => state.chats.chats);

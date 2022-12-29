@@ -2,8 +2,7 @@ import axios from "axios";
 
 // 기본 URL
 const instance = axios.create({
-  baseURL: "http://jong-10.shop/api",
-
+  baseURL: "https://jong-10.shop/api",
   header: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -13,8 +12,7 @@ const instance = axios.create({
 
 // baseURL
 export const baseURL = axios.create({
-  baseURL: "http://jong-10.shop/api",
-
+  baseURL: "https://jong-10.shop/api",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -23,7 +21,7 @@ export const baseURL = axios.create({
 });
 
 export const chatURL = axios.create({
-  baseURL: "http://jong-10.shop",
+  baseURL: "https://jong-10.shop",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -32,7 +30,7 @@ export const chatURL = axios.create({
 });
 
 export const kakaoLogin = axios.create({
-  baseURL: "http://jong-10.shop/api",
+  baseURL: "https://jong-10.shop/api",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",

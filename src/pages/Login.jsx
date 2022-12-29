@@ -76,30 +76,32 @@ const Login = () => {
 
 const StTitle = styled.h3`
   margin: 0 auto;
-  padding: 20px 0px 10px 0px;
+  padding: 30px 0px 10px 0px;
   font-weight: 900px;
   color: #f0fcff;
   font-size: 28px;
 `;
 const StInputGroup = styled.div`
-  gap: 10px;
+  gap: 11px;
+  margin-left: 38px;
+
   display: grid;
 
   margin-bottom: 5px;
   margin-top: -10px;
 `;
 const StFormLabel = styled.label`
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   margin: 0 auto;
-  padding: 10px;
+  padding: 13px;
   color: #eafaf8;
 `;
 const StAddForm = styled.div`
   position: relative;
-  height: 39 0px;
+  height: 500px;
   background-color: rgba(0, 0, 0, 0.205);
-  width: 227px;
+  width: 300px;
   border-radius: 20px;
   display: grid;
   padding: 30px;
@@ -107,7 +109,7 @@ const StAddForm = styled.div`
 `;
 
 const StAddInput = styled.input`
-  height: 40px;
+  height: 50px;
   width: 200px;
 
   border: none;
@@ -128,8 +130,9 @@ const StButton = styled.div`
 
 const StAddButton = styled.button`
   border: none;
-  height: 35px;
+  height: 40px;
   margin: 0 auto;
+
   justify-content: center;
   display: block;
   cursor: pointer;
@@ -138,6 +141,7 @@ const StAddButton = styled.button`
   padding-left: 20px;
   width: 150px;
   color: #ffffff;
+
   font-weight: 600;
   font-size: 17px;
   &:hover {
@@ -148,7 +152,7 @@ const StAddButton = styled.button`
 
 const StAddButton2 = styled.button`
   border: none;
-  height: 30px;
+  height: 35px;
 
   margin: 0 auto;
   justify-content: center;
@@ -157,6 +161,7 @@ const StAddButton2 = styled.button`
   border-radius: 8px;
   background-color: white;
   width: 150px;
+
   color: #ff8c00;
   font-weight: 600;
   font-size: 14px;
@@ -169,7 +174,7 @@ const StAddButton2 = styled.button`
 
 const StAddButton3 = styled.button`
   border: none;
-  height: 30px;
+  height: 35px;
 
   margin: 0 auto;
   justify-content: center;
@@ -198,6 +203,8 @@ const StLine = styled.hr`
   height: 2px;
   margin: 0 auto;
   background-color: #e38f27;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-radius: 50px;
 `;
 

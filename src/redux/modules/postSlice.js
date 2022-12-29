@@ -6,6 +6,7 @@ const initialState = {
   posts: [],
   like: [],
   isLoading: true,
+  addPostDone: false,
   error: null,
   detail: {
     id: 0,
@@ -120,8 +121,8 @@ export const __editPost = createAsyncThunk(
       //   `http://localhost:3002/recipes/${recipeId}`,
       //   recipe
       // );
-      thunkAPI.dispatch(__editPost());
-      //순서를 보장해줌. 렌더링이 더 빨리되서 수정된 값이 보이지 않음 -> 순서를 보장해서 렌더링이 더 늦게 되게함.
+      //thunkAPI.dispatch(__editPost());
+      //순서를 보장해줌. 렌더링이 더 빨리되서 수정된 값이 보이지 않음 -> 순서를 보장해서 렌더링이 더 늦게 되게함.(위에줄)
       console.log("data: ", data.data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
@@ -169,7 +170,15 @@ export const __editPost = createAsyncThunk(
 export const postSlice = createSlice({
   name: "post",
   initialState,
-  reducers: {},
+  reducers: {
+    reset(state) {
+      Object.assign(state, initialState);
+      console.log(state);
+    },
+    // (171-174) state를 초기화하는 함수.
+    // addPostDone이 처음에 false인데 reducer에서 true로 바꿔줌. 물리적 새로고침을 하기 전까진 계속 true로 유지됨.
+    // 그래서 post.jsx component 접근할 때(useEffect 안에) dispatch(reset())을 해줘서 addPostDone을 false로 설정해줌.
+  },
   extraReducers: {
     // 리스트 불러오기 ---------------
     [__getPost.pending]: (state) => {
@@ -232,12 +241,10 @@ export const postSlice = createSlice({
       // 액션으로 받은 값 = payload 추가해준다.
       console.log("action: ", action.payload);
       state.isLoading = false;
+      state.addPostDone = true;
+      //addPost가 완료됨(true)
       // state.posts = [...state.posts, action.payload];
-      state.posts.unshift(action.payload);
-      // push는 맨 뒤에 붙게하는 메소드. 내림차순이라서 맞물림. 메소드 바꾸기.
-      // unshift :  배열의 요소를 추가하고, 배열의 새로운 길이를 반환한다는 점에서 push 메서드와 동일하지만,
-      //배열의 맨 끝이 아닌 맨 앞에 요소를 추가한다는 점에서 push 메서드와 반대이다.
-
+      state.posts.push(action.payload);
       console.log("action:: ", action.payload);
     },
     [__addPost.rejected]: (state, action) => {
@@ -288,22 +295,25 @@ export const postSlice = createSlice({
         post.id === action.payload.id
           ? {
               ...post,
-              title: action.payload.data.title,
-              content: action.payload.data.content,
-              image: action.payload.data.image,
-              location: action.payload.data.location,
-              price: action.payload.data.price,
+              title: action.payload.title,
+              content: action.payload.content,
+              image: action.payload.image,
+              location: action.payload.location,
+              price: action.payload.price,
             }
           : post
       );
+      console.log("action.payload:: ", action.payload);
       state.detail = {
-        title: action.payload.data.title,
+        title: action.payload.title,
+
         //action.payload에 title이 있는지 확인!
-        content: action.payload.data.content,
-        image: action.payload.data.image,
-        location: action.payload.data.location,
-        price: action.payload.data.price,
+        content: action.payload.content,
+        image: action.payload.image,
+        location: action.payload.location,
+        price: action.payload.price,
       };
+
       // state.recipes = action.payload.recipe
       // const index = state.recipes.findIndex(
       //   (recipe) => recipe.id === action.payload[0]
@@ -349,5 +359,5 @@ export const postSlice = createSlice({
   },
 });
 
-// export const {} = recipesSlice.actions;
+export const { reset } = postSlice.actions;
 export default postSlice.reducer;

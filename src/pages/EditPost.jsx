@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { __editPost, __getIdPost } from "../redux/modules/postSlice";
 import Swal from "sweetalert2";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
+import { __editPost, __getIdPost, reset } from "../redux/modules/postSlice";
+import { IoIosArrowBack } from "react-icons/io";
+import { VscMenu } from "react-icons/vsc";
+import { VscCircleLargeOutline } from "react-icons/vsc";
 
 const EditPost = () => {
   const dispatch = useDispatch();
@@ -82,78 +85,98 @@ const EditPost = () => {
 
   return (
     <Wrap>
-      <Carrot>🥕 게시글 작성 🥕</Carrot>
-      <Inputs>
-        <Titleinput
-          type="text"
-          placeholder="제목"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
-        <Imginput
-          type="text"
-          placeholder="image URL"
-          value={image}
-          onChange={(e) => {
-            setImage(e.target.value);
-          }}
-        />
-        <Addressinput
-          type="text"
-          placeholder="거래 희망 장소"
-          value={location}
-          onChange={(e) => {
-            setLocation(e.target.value);
-          }}
-        />
-        <Priceinput
-          type="number"
-          placeholder="가격"
-          value={price}
-          onChange={(e) => {
-            setPrice(e.target.value);
-          }}
-        />
-        <Contenttextarea
-          type="text"
-          placeholder="게시글 내용을 작성해주세요.(가품 및 판매 금지 물품은 게시가 제한될 수 있어요.)"
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
-        />
-      </Inputs>
-      <Btns>
-        <Addbtn onClick={onClickEditPostHandler}>수정완료</Addbtn>
-        <Movebtn>이전</Movebtn>
-      </Btns>
+      <Phone>
+        <Carrot>🥕 게시글 수정 🥕</Carrot>
+        <Inputs>
+          <Titleinput
+            type="text"
+            placeholder="제목"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+          <Imginput
+            type="text"
+            placeholder="image URL"
+            value={image}
+            onChange={(e) => {
+              setImage(e.target.value);
+            }}
+          />
+          <Addressinput
+            type="text"
+            placeholder="거래 희망 장소"
+            value={location}
+            onChange={(e) => {
+              setLocation(e.target.value);
+            }}
+          />
+          <Priceinput
+            type="number"
+            placeholder="가격"
+            value={price}
+            onChange={(e) => {
+              setPrice(e.target.value);
+            }}
+          />
+          <Contenttextarea
+            type="text"
+            placeholder="게시글 내용을 작성해주세요.(가품 및 판매 금지 물품은 게시가 제한될 수 있어요.)"
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+          />
+        </Inputs>
+
+        <Btns>
+          <Addbtn onClick={onClickEditPostHandler}>수정완료</Addbtn>
+        </Btns>
+        <Underline>
+          <Under>
+            <IoIosArrowBack
+              className="icon"
+              size="40"
+              color="white"
+              onClick={() => navigate("/")}
+            />
+            <VscCircleLargeOutline className="icon" size="40" color="white" />
+            <VscMenu className="icon" size="40" color="white" />
+          </Under>
+        </Underline>
+      </Phone>
     </Wrap>
   );
 };
 
 const Wrap = styled.div`
-  width: 620px;
-  height: 750px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* border: 1px solid red; */
+`;
+const Phone = styled.div`
+  //border: 1px solid red;
+  border-radius: 20px;
+  background-color: #212123;
+  width: 520px;
+  height: 800px;
 `;
 const Carrot = styled.div`
-  font-size: 60px;
+  font-size: 40px;
   font-family: "Jua", sans-serif;
-  color: #f76505;
-  margin-bottom: 40px;
+  margin-bottom: -70px;
+  margin-top: 10px;
   text-align: center;
+  color: white;
 `;
 const Inputs = styled.div`
   text-align: center;
+  margin-top: 100px;
 `;
 const Titleinput = styled.input`
-  width: 600px;
+  width: 450px;
   height: 50px;
   border-radius: 15px;
   margin-bottom: 30px;
@@ -161,7 +184,7 @@ const Titleinput = styled.input`
   outline: none;
 `;
 const Imginput = styled.input`
-  width: 600px;
+  width: 450px;
   height: 50px;
   border-radius: 15px;
   margin-bottom: 30px;
@@ -169,7 +192,7 @@ const Imginput = styled.input`
   outline: none;
 `;
 const Addressinput = styled.input`
-  width: 600px;
+  width: 450px;
   height: 50px;
   border-radius: 15px;
   margin-bottom: 30px;
@@ -177,7 +200,7 @@ const Addressinput = styled.input`
   outline: none;
 `;
 const Priceinput = styled.input`
-  width: 600px;
+  width: 450px;
   height: 50px;
   border-radius: 15px;
   margin-bottom: 30px;
@@ -185,7 +208,7 @@ const Priceinput = styled.input`
   outline: none;
 `;
 const Contenttextarea = styled.textarea`
-  width: 600px;
+  width: 450px;
   height: 200px;
   border-radius: 15px;
   margin-bottom: 20px;
@@ -195,34 +218,34 @@ const Contenttextarea = styled.textarea`
 `;
 const Btns = styled.div`
   display: flex;
-  margin-left: 400px;
+  text-align: center;
+  margin-left: 190px;
+  //margin-top: 10px;
+  margin-bottom: 15px;
 `;
 const Addbtn = styled.button`
-  width: 100px;
+  width: 120px;
   height: 40px;
   font-size: 16px;
   background-color: transparent;
   border-radius: 20px;
+  border: 1px solid white;
+  color: white;
   cursor: pointer;
   &:hover {
-    background-color: #f76505;
-    color: white;
-    border: none;
+    border: 3px solid white;
   }
 `;
-const Movebtn = styled.button`
-  width: 100px;
-  height: 40px;
-  margin-left: 10px;
-  font-size: 16px;
-  background-color: transparent;
-  border-radius: 20px;
-  cursor: pointer;
-  &:hover {
-    background-color: #f76505;
-    color: white;
-    border: none;
-  }
+
+const Underline = styled.div`
+  border-top: 1px solid white;
+`;
+const Under = styled.div`
+  width: 450px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 25px;
+  margin-top: 15px;
 `;
 
 export default EditPost;

@@ -64,7 +64,7 @@ const Login = () => {
               </form>
               <StLine />
               <StA
-                href="https://kauth.kakao.com/oauth/authorize?client_id=d6c5b10cf544ae8fcc0cbb0bbc530328&redirect_uri=http://banibanipj.s3-website.ap-northeast-2.amazonaws.com/api/user/kakao/callback&response_type=code"
+                href="https://kauth.kakao.com/oauth/authorize?client_id=d6c5b10cf544ae8fcc0cbb0bbc530328&redirect_uri=http://localhost:3000/api/user/kakao/callback&response_type=code"
                 style={{ textDecoration: "none" }}
               >
                 <StAddButton3>카카오 로그인</StAddButton3>

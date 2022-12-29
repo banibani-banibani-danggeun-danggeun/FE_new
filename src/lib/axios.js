@@ -23,7 +23,7 @@ export const baseURL = axios.create({
 });
 
 export const chatURL = axios.create({
-  baseURL: "http://43.200.248.80",
+  baseURL: "http://43.200.248.80/ws-stomp",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -61,8 +61,6 @@ export const apis = {
   deletePost: (id) => baseURL.delete(`/post/${id}`),
   editPost: (id, post) => baseURL.patch(`/post/${id}`, post),
 
-  // getChatRoom: () => chatURL.get("/chat/rooms"),
-  createRoom: (postId) => chatURL.post(`/chat/room?postId=${postId}`),
-  // enterRoom: (roomId) => chatURL.get(`/chat/room/enter/${roomId}`),
-  // findRoom: (roomId) => chatURL.get(`/room/${roomId}`),
+  getChatRoom: () => chatURL.get("/chat/rooms"),
+  chatCreate: () => chatURL.post("/chat/room"),
 };

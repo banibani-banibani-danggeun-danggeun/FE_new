@@ -23,7 +23,7 @@ export const baseURL = axios.create({
 });
 
 export const chatURL = axios.create({
-  baseURL: "http://jaeha.shop",
+  baseURL: "http://43.200.248.80",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -77,6 +77,7 @@ export const apis = {
   getChatRoom: () => chatURL.get("/chat/room"),
   getMessage: (roomId) => chatURL.get(`/chat/getmessage/${roomId}`),
   createRoom: (postId) => chatURL.post(`/chat/room?postId=${postId}`),
+  getChatList: (nickname) => chatURL.get(`/chat/rooms/${nickname}`),
   // enterRoom: (roomId) => chatURL.get(`/chat/room/enter/${roomId}`),
   // findRoom: (roomId) => chatURL.get(`/room/${roomId}`),
 };

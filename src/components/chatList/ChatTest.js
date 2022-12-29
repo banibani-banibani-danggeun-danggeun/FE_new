@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useInput } from "../../lib/utils/useInput";
+// import { useInput } from "../../lib/utils/useInput";
 import { __getChatRoom, __getMessage } from "../../redux/modules/chatSlice";
 import Stomp from "stompjs";
 import sockJS from "sockjs-client";
@@ -27,10 +27,6 @@ const ChatTest = () => {
     dispatch(__getChatRoom()).then((res) => {
       console.log("getChatRoom res--->", res);
     });
-    //   axios.get("http://43.200.248.80/chat/rooms").then((res) => {
-    //   console.log("getChatRoom res--->", res);
-    //   data.chatrooms = res.data;
-    // });
   };
 
   const getMessage = (roomId) => {
@@ -51,7 +47,7 @@ const ChatTest = () => {
   console.log("postUserNickname--->", postUserNickname);
 
   // 보낼 메시지 텍스트
-  const [messages, setMessages] = useInput();
+  const [messages, setMessages] = useState([]);
   console.log("messageText--->", messages);
 
   // sender 정보 가져오기
@@ -62,15 +58,24 @@ const ChatTest = () => {
   useEffect(() => {
     // waitForConnection(ws, socketSubscribe());
     console.log("연결 확인");
-    socketSubscribe();
     getChatRoom();
     getMessage(roomId);
-    // console.log("68-roomId", roomId);
     // return () => {
     //   socketUnsubscribe();
     // };
   }, [roomId]);
 
+  useEffect(() => {
+    setMessages(...messageLists);
+  }, [messageLists]);
+
+  useEffect(() => {
+    socketSubscribe();
+  }, []);
+
+  const messageChange = (e) => {
+    setMessages(e.target.value);
+  };
   /*
   // 소켓 연결이 계속 끊길 때
   const waitForConnection = (stompClient, callback) => {
@@ -104,7 +109,8 @@ const ChatTest = () => {
             (data) => {
               const newMessage = JSON.parse(data.body);
               console.log("newMessage---> ", newMessage);
-              // setMessages(newMessage.message);
+              const newList = messages;
+              setMessages([...newList, newMessage]);
               // dispatch(chatActions.getMessages(newMessage))
 
               //   if (response.type === "JOIN" || response.type === "LEAVE") {
@@ -236,9 +242,11 @@ const ChatTest = () => {
         </h5>
         <div>
           {messageLists?.map((msg) => (
-            <div>
-              {msg.sender} : {msg.message}
-            </div>
+            <StDiv msg_lists>
+              <StDiv date_>{msg.createdAt.slice(11, 16)}</StDiv>
+              <StDiv sender>{msg.sender}</StDiv>
+              <StDiv msg>{msg.message}</StDiv>
+            </StDiv>
           ))}
         </div>
       </StDiv>
@@ -247,11 +255,15 @@ const ChatTest = () => {
         <StInput
           type="text"
           id="messages"
-          value={messages}
-          onChange={setMessages}
+          // value={messages || ""}
+          onChange={messageChange}
           placeholder="채팅을 입력하세요"
         />
-        <RiSendPlaneFill size="30" onClick={sendMessage} />
+        <RiSendPlaneFill
+          size="30"
+          onClick={sendMessage}
+          style={{ cursor: "pointer" }}
+        />
       </StDiv>
     </div>
   );
@@ -279,6 +291,37 @@ const StDiv = styled.div`
       align-items: center;
       gap: 10px;
       margin: 10px 10px;
+    `}
+    ${(props) =>
+    props.msg_lists &&
+    css`
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    `}
+      ${(props) =>
+    props.sender &&
+    css`
+      padding: 5px;
+      margin: 5px;
+      background-color: #46494e;
+      border-radius: 10px;
+      font-size: 11px;
+    `}
+      ${(props) =>
+    props.msg &&
+    css`
+      padding: 5px;
+      margin: 5px;
+      background-color: #fc8753;
+      border-radius: 10px;
+      font-size: 13px;
+    `}
+    ${(props) =>
+    props.date_ &&
+    css`
+      color: #d8d6d6;
+      font-size: 8px;
     `}
 `;
 

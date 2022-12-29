@@ -26,7 +26,7 @@ const Header = () => {
           <Span cate_txt onClick={() => navigate("/post")}>
             글쓰기
           </Span>
-          <Span cate_txt onClick={() => navigate("/chat")}>
+          <Span cate_txt onClick={() => navigate("/mychat")}>
             채팅하기
           </Span>
         </StDiv>

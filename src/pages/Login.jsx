@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useInput } from "../lib/utils/useInput";
 import { __postLogin } from "../redux/modules/loginSlice";
 import { Link } from "react-router-dom";
-import { KAKAO_AUTH_URL } from "../lib/Auth";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [username, setUserName] = useInput();
@@ -20,14 +20,17 @@ const Login = () => {
       .then((res) => {
         console.log("res: ", res);
         if (res.data.statusCode === 200) {
-          alert("당근당근! 로그인 성공");
+          Swal.fire("Success", "당근당근! 로그인 성공", "succees");
+          // alert("당근당근! 로그인 성공");
         }
-        console.log(res.headers.authorization);
+        // console.log(res.headers.authorization);
         localStorage.setItem("id", res.headers.authorization);
         localStorage.setItem("nickname", res.data.data);
         navigate("/");
       })
-      .catch((error) => alert("ID 또는 비밀번호가 틀립니다"));
+      .catch((error) =>
+        Swal.fire("Error", "ID 또는 비밀번호가 다릅니다!", "error")
+      );
     // .catch((error) => alert(error.response.data.msg));
   };
 
@@ -60,7 +63,10 @@ const Login = () => {
                 </StButton>
               </form>
               <StLine />
-              <StA href={KAKAO_AUTH_URL} style={{ textDecoration: "none" }}>
+              <StA
+                href="https://kauth.kakao.com/oauth/authorize?client_id=d6c5b10cf544ae8fcc0cbb0bbc530328&redirect_uri=http://localhost:3000/api/user/kakao/callback&response_type=code"
+                style={{ textDecoration: "none" }}
+              >
                 <StAddButton3>카카오 로그인</StAddButton3>
               </StA>
               <Link to="/signup" style={{ textDecoration: "none" }}>

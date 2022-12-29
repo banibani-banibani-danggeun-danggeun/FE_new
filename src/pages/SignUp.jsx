@@ -28,7 +28,9 @@ const SignUp = () => {
         // console.log("signup res: ", res);
         // alert(res.data.msg);
         // localStorage.setItem("id", res.headers.authorization);
-        navigate("/login");
+        if (res.data.statusCode === 200) {
+          navigate("/login");
+        }
       })
       .catch((err) => {
         console.log("error: ", err);

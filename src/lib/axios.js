@@ -77,6 +77,7 @@ export const apis = {
   getChatRoom: () => chatURL.get("/chat/room"),
   getMessage: (roomId) => chatURL.get(`/chat/getmessage/${roomId}`),
   createRoom: (postId) => chatURL.post(`/chat/room?postId=${postId}`),
+  getChatList: (nickname) => chatURL.get(`/chat/rooms/${nickname}`),
   // enterRoom: (roomId) => chatURL.get(`/chat/room/enter/${roomId}`),
   // findRoom: (roomId) => chatURL.get(`/room/${roomId}`),
 };

@@ -1,4 +1,5 @@
 import { apis } from "../../lib/axios";
+import Swal from "sweetalert2";
 
 // id 중복체크
 export const __checkUserName = async (username) => {
@@ -7,29 +8,31 @@ export const __checkUserName = async (username) => {
     console.log("username: ", username);
     console.log("data: ", data);
     if (data.data.statusCode === 200) {
-      alert(data.data.msg);
+      // alert(data.data.msg);
+      Swal.fire("Success", data.data.msg, "succees");
     }
-    // useSweet(1000, "success", "회원가입 성공!");
     return data;
   } catch (error) {
-    alert(error);
+    console.log(error);
+    Swal.fire("Error", error.response.data.msg, "error");
+    // alert(error);
     // useSweet(1000, "error", error.response.data.msg);
   }
 };
 
-// id 중복체크
+// 닉네임 중복체크
 export const __checkNickname = async (nickname) => {
   try {
     const data = await apis.checkNickname(nickname);
     console.log("nickname: ", nickname);
     console.log("data: ", data);
     if (data.data.statusCode === 200) {
-      alert("data.data.msg");
+      Swal.fire("Success", data.data.msg, "succees");
     }
     // useSweet(1000, "success", "회원가입 성공!");
     return data;
   } catch (error) {
-    alert(error);
+    Swal.fire("Error", error.response.data.msg, "error");
     // useSweet(1000, "error", error.response.data.msg);
   }
 };
@@ -41,8 +44,8 @@ export const __postLogin = async (post) => {
     //   email: "eve.holt@reqres.in",
     //   password: "cityslicka",
     // });
-    console.log("post: ", post);
-    console.log("data: ", data);
+    // console.log("post: ", post);
+    // console.log("data: ", data);
     return data;
   } catch (error) {
     console.log(error.response.data.msg);
@@ -52,11 +55,13 @@ export const __postLogin = async (post) => {
 export const __postSignup = async (post) => {
   try {
     const data = await apis.postSignup(post);
-    console.log("post: ", post);
-    console.log("data: ", data);
-    alert("회원가입 성공!");
+    // console.log("post: ", post);
+    // console.log("data: ", data);
+    Swal.fire("Success", data.data.msg, "succees");
+    // alert("회원가입 성공!");
     return data;
   } catch (error) {
-    alert("error", error.response.data.msg);
+    Swal.fire("Error", error.response.data.msg, "error");
+    // alert("error", error.response.data.msg);
   }
 };

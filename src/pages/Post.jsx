@@ -39,7 +39,7 @@ const Post = () => {
     } else if (addPost.content === "") {
       alert("내용을 입력해주세요.");
     } else {
-      dispatch(__addPost(addPost));
+      dispatch(__addPost(addPost)).then(() => console.log("하하"));
       console.log("여기");
       // "여기" 가 200완료보다 더 빨리됨.
       // navigate가 성공여부와 상관없이 홈으로 보내게 해서 여기에 navigate를 쓰면 안됨.

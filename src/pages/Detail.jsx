@@ -29,7 +29,7 @@ const Detail = () => {
     if (isLogin === true) {
       dispatch(__deletePost(id));
       alert("삭제 완료되었습니다.");
-      navigate(`/`);
+      //navigate(`/`);
     } else {
       alert("로그인 후 이용 가능합니다.");
     }

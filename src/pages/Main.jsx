@@ -37,7 +37,7 @@ const Main = () => {
     setLoad(true); // 글 불러와서 로딩
     const res = await axios({
       method: "GET",
-      url: `http://jong-10.shop/api/post`,
+      url: `https://jong-10.shop/api/post`,
     });
     if (res.data) {
       if (res.data.end) {

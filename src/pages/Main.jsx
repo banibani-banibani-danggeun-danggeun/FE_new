@@ -5,6 +5,7 @@ import styled from "styled-components";
 import PostingBlock from "../components/main/PostingBlock";
 
 const Main = () => {
+
   const [list, setList] = useState([]);
   const [page, setPage] = useState(1);
   const [load, setLoad] = useState(1);
@@ -19,6 +20,8 @@ const Main = () => {
       observer.disconnect();
     };
   }, []);
+
+
 
   useEffect(() => {
     getList();
@@ -36,7 +39,7 @@ const Main = () => {
     setLoad(true);
     const res = await axios({
       method: "GET",
-      url: `http://api.jaeha.shop/api/post`,
+      url: `http://13.209.173.113/api/post`,
     });
     if (res.data) {
       setList((prev) => [...new Set([...prev, ...res.data])]); //리스트 추가

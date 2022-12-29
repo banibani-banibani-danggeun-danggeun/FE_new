@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { __editPost, __getPost } from "../redux/modules/postSlice";
+import { __editPost, __getIdPost } from "../redux/modules/postSlice";
 
 const EditPost = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const EditPost = () => {
       alert("제목을 입력해주세요.");
     } else if (newPost.image === "") {
       alert("URL을 입력해주세요.");
-    } else if (newPost.location === undefined) {
+    } else if (newPost.location === "") {
       alert("지역을 입력해주세요.");
     } else if (newPost.price === "") {
       alert("가격을 입력해주세요.");
@@ -43,20 +43,23 @@ const EditPost = () => {
       alert("내용을 입력해주세요.");
     } else {
       dispatch(__editPost([newPost, id]));
+      navigate(`/detail/${id}`);
     }
 
     // dispatch(__editPost([newPost, id]));
-    // navigate(`/`); //post 후 detail로 넘어가게 하기
+    //post 후 detail로 넘어가게 하기
   };
 
-  const selected = useSelector((state) => state.post);
-
   useEffect(() => {
-    dispatch(__getPost(Number(id)));
+    dispatch(__getIdPost(Number(id)));
   }, [dispatch, id]);
+  const selected = useSelector((state) => state.posts.detail);
+  //detail에 가져온것처럼 똑같이 가져와야함.
+  console.log(selected);
 
   useEffect(() => {
     if (selected) {
+      console.log(selected);
       setTitle(selected.title);
       setImage(selected.image);
       setContent(selected.content);
@@ -111,7 +114,7 @@ const EditPost = () => {
         />
       </Inputs>
       <Btns>
-        <Addbtn onClick={onClickEditPostHandler}>추가</Addbtn>
+        <Addbtn onClick={onClickEditPostHandler}>수정완료</Addbtn>
         <Movebtn>이전</Movebtn>
       </Btns>
     </Wrap>

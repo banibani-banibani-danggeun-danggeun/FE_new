@@ -3,6 +3,7 @@ import { BsGithub } from "react-icons/bs";
 import { FiGithub } from "react-icons/fi";
 import { BsFacebook, BsInstagram, BsYoutube } from "react-icons/bs";
 import { SiNaver, SiNotion } from "react-icons/si";
+import Button from "../button/Button";
 
 const Footer = () => {
   const chan = "https://github.com/front-chan";
@@ -18,7 +19,6 @@ const Footer = () => {
   const instagram = "https://www.instagram.com/daangnmarket/";
   const youtube = "https://www.youtube.com/channel/UC8tsBsQBuF7QybxgLmStihA";
   const blog = "https://blog.naver.com/daangn";
-
   return (
     <StDiv footer_box>
       <div>
@@ -27,100 +27,100 @@ const Footer = () => {
           <p>BackEnd</p>
           <p>FrontEnd</p>
         </StDiv>
-        <StButton
+        <Button
           onClick={() => {
             window.open(yeol);
           }}
         >
           <BsGithub size="25" color="#868b94" />
           <StP>이승열</StP>
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(jaeha);
           }}
         >
           <BsGithub size="25" color="#868b94" />
           <StP>최재하</StP>
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(jongyeol);
           }}
         >
           <BsGithub size="25" color="#868b94" />
           <StP>유종열</StP>
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(gyumin);
           }}
         >
           <BsGithub size="25" color="#868b94" />
           <StP>김규민</StP>
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(chan);
           }}
         >
           <FiGithub size="25" color="#868b94" />
           <StP>최신영</StP>
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(hayoung);
           }}
         >
           <FiGithub size="25" color="#868b94" />
           <StP>김하영</StP>
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(saeyeon);
           }}
         >
           <FiGithub size="25" color="#868b94" />
           <StP>김세연</StP>
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(notion);
           }}
         >
           <SiNotion size="25" color="#868b94" />
           <StP>6조 노션</StP>
-        </StButton>
+        </Button>
       </div>
       <div>
-        <StButton
+        <Button
           onClick={() => {
             window.open(facebook);
           }}
         >
           <BsFacebook size="25" color="#868b94" />
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(instagram);
           }}
         >
           <BsInstagram size="25" color="#868b94" />
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(youtube);
           }}
         >
           <BsYoutube size="25" color="#868b94" />
-        </StButton>
-        <StButton
+        </Button>
+        <Button
           onClick={() => {
             window.open(blog);
           }}
         >
           <SiNaver size="25" color="#868b94" />
-        </StButton>
+        </Button>
       </div>
     </StDiv>
   );
@@ -149,12 +149,6 @@ const StDiv = styled.div`
       margin-left: 10px;
       gap: 130px;
     `}
-`;
-
-const StButton = styled.button`
-  background-color: transparent;
-  border: 0;
-  cursor: pointer;
 `;
 
 const StP = styled.p`

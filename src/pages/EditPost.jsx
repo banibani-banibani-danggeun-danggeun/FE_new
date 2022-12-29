@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { __editPost, __getIdPost } from "../redux/modules/postSlice";
+import Swal from "sweetalert2";
 
 const EditPost = () => {
   const dispatch = useDispatch();
@@ -32,17 +33,28 @@ const EditPost = () => {
       price: price,
     };
     if (newPost.title === "") {
-      alert("제목을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "제목을 입력해주세요!" });
+      // alert("제목을 입력해주세요.");
     } else if (newPost.image === "") {
-      alert("URL을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "URL을 입력해주세요!" });
+      // alert("URL을 입력해주세요.");
     } else if (newPost.location === "") {
-      alert("지역을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "지역을 입력해주세요!" });
+      // alert("지역을 입력해주세요.");
     } else if (newPost.price === "") {
-      alert("가격을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "가격을 입력해주세요!" });
+      // alert("가격을 입력해주세요.");
     } else if (newPost.content === "") {
-      alert("내용을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "내용을 입력해주세요!" });
+      // alert("내용을 입력해주세요.");
     } else {
-      dispatch(__editPost([newPost, id]));
+      dispatch(
+        __editPost([newPost, id])
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err))
+      );
       navigate(`/detail/${id}`);
     }
 

@@ -76,7 +76,6 @@ const Main = () => {
                     </StCardsWrap>
                   );
                 })}
-                ; ;
               </>
             )}
             {load ? <div> 당근당근! 로딩 중</div> : <></>}

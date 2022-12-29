@@ -149,7 +149,7 @@ const StInputGroup = styled.div`
   margin-top: -10px;
 `;
 const StFormLabel = styled.label`
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 580;
   margin: 0 auto;
   padding: 6px;
@@ -157,9 +157,9 @@ const StFormLabel = styled.label`
 `;
 const StAddForm = styled.div`
   position: relative;
-  height: 39 0px;
+  height: 500px;
   background-color: rgba(0, 0, 0, 0.205);
-  width: 227px;
+  width: 300px;
   border-radius: 20px;
   display: grid;
   padding: 30px;
@@ -167,8 +167,8 @@ const StAddForm = styled.div`
 `;
 
 const StAddInput = styled.input`
-  height: 40px;
-  width: 210px;
+  height: 43px;
+  width: 240px;
 
   border: none;
   border-radius: 10px;
@@ -247,7 +247,7 @@ const StDiv = styled.label`
 
 const StButton = styled.button`
   position: absolute;
-  top: 10px;
+  top: 12px;
   right: 10px;
   border-radius: 5px;
   border: none;

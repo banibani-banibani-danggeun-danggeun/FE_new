@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apis } from "../../lib/axios";
-// import axios from "axios";
+import Swal from "sweetalert2";
 
 const initialState = {
   posts: [],
@@ -38,7 +38,7 @@ export const __getPost = createAsyncThunk(
   }
 );
 
-// 해당 아이디 값 데이터 불러오기 (안먹힘....)
+// 해당 아이디 값 데이터 불러오기
 export const __getIdPost = createAsyncThunk(
   "getIdPost",
   async (payload, thunkAPI) => {
@@ -66,6 +66,9 @@ export const __addPost = createAsyncThunk(
       // const data = await axios.post("http://localhost:3002/recipes", payload);
       console.log("payload: ", payload);
       console.log("createPost::: ", data);
+      if (data.status === 200) {
+        Swal.fire(data.msg, "게시물 작성이 완료되었습니다!", "success");
+      }
       return thunkAPI.fulfillWithValue(data.data.data);
       // 추가했을 때 새로고침을 해야 내용이 제대로 들어감. -매니저님께 여쭤볼것2
       // data status 코드랑 message가 추가가 되고 새로고침하면 데이터가 제대로 들어감.

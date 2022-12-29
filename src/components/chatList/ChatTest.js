@@ -1,25 +1,27 @@
 import styled, { css } from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiSendPlaneFill } from "react-icons/ri";
-// import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useInput } from "../../lib/utils/useInput";
-import { __getChatRoom } from "../../redux/modules/chatSlice";
-
+import { __getChatRoom, __getMessage } from "../../redux/modules/chatSlice";
 import Stomp from "stompjs";
 import sockJS from "sockjs-client";
-// import { apis } from "../../lib/axios";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ChatTest = () => {
-  // const [roomName, setRoomName] = useInput();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const socket = new sockJS("ws-stomp");
+  const socket = new sockJS("http://43.200.248.80/ws-stomp");
   const ws = Stomp.over(socket);
 
   const chats = useSelector((state) => state.chats.chats);
   console.log("chats--->", chats);
+
+  const messageLists = useSelector((state) => state.chats.messages);
+  console.log("messageLists--->", messageLists);
 
   const getChatRoom = () => {
     dispatch(__getChatRoom()).then((res) => {
@@ -31,9 +33,11 @@ const ChatTest = () => {
     // });
   };
 
-  useEffect(() => {
-    getChatRoom();
-  }, []);
+  const getMessage = (roomId) => {
+    dispatch(__getMessage(roomId)).then((res) => {
+      console.log("getMessage res--->", res);
+    });
+  };
 
   // 토큰
   const token = localStorage.getItem("id");
@@ -57,7 +61,11 @@ const ChatTest = () => {
   // 렌더링 될 때마다 연결, 구독 다른 방으로 옮길 때 연결, 구독 해제
   useEffect(() => {
     // waitForConnection(ws, socketSubscribe());
+    console.log("연결 확인");
     socketSubscribe();
+    getChatRoom();
+    getMessage(roomId);
+    // console.log("68-roomId", roomId);
     // return () => {
     //   socketUnsubscribe();
     // };
@@ -83,17 +91,20 @@ const ChatTest = () => {
   // 웹소켓 연결, 구독
   const socketSubscribe = () => {
     try {
+      console.log("try 확인");
       ws.connect(
         {
           token: token,
         },
         () => {
+          console.log("sub 확인");
+          // console.log("roomId:", roomId);
           ws.subscribe(
             `/sub/chat/room/${roomId}`,
             (data) => {
               const newMessage = JSON.parse(data.body);
               console.log("newMessage---> ", newMessage);
-              //   setSemiMsgList(response);
+              // setMessages(newMessage.message);
               // dispatch(chatActions.getMessages(newMessage))
 
               //   if (response.type === "JOIN" || response.type === "LEAVE") {
@@ -108,7 +119,7 @@ const ChatTest = () => {
           );
           console.log("연결되었습니다");
           // sendMessage();
-          enterMessage();
+          // enterMessage();
         }
       );
     } catch (error) {
@@ -131,42 +142,51 @@ const ChatTest = () => {
   //     }
   //   };
 
+  /*
   // 입장 메세지
   const enterMessage = () => {
     try {
       if (!token) {
         alert("토큰이 없습니다. 다시 로그인 해주세요.");
         // history.replace("/");
+        // navigate('/login');
       }
       // send할 데이터
-      const data = {
-        type: "ENTER",
-        roomId: roomId,
-        sender: sender,
-        message: `${sender}님이 채팅방에 참여하였습니다!`,
-      };
-      ws.send("/pub/chat/message", {}, JSON.stringify(data));
+      // const data = {
+      //   type: "ENTER",
+      //   roomId: roomId,
+      //   sender: sender,
+      //   // message: joinMsg,
+      //   message: `${sender}님이 채팅방에 참여하였습니다!`,
+      // };
+      // if (data.type === "ENTER") {
+      // ws.send("/pub/chat/message", {}, JSON.stringify(data));
+      // }
     } catch (err) {
       console.log(err);
     }
   };
+  */
 
   // 채팅 메세지 보내기
   const sendMessage = () => {
     try {
       if (!token) {
-        alert("토큰이 없습니다. 다시 로그인 해주세요.");
+        Swal.fire("토큰이 없습니다", "다시 로그인 해주세요!", "error");
+        // alert("토큰이 없습니다. 다시 로그인 해주세요.");
+        navigate("/login");
         // history.replace('/')
+        return;
       }
       // send할 데이터
       const data = {
         type: "TALK",
         roomId: roomId,
-        // nickname: localStorage.getItem("nickname"),
         sender: sender,
         message: messages,
       };
 
+      console.log("sendData--->", data);
       // 빈 문자열이면 리턴
       if (messages === "") {
         return;
@@ -211,21 +231,16 @@ const ChatTest = () => {
     <div>
       <StDiv chat_list>
         {/* <div class="container" id="app" v-cloak : display-none> */}
-        <h3>채팅방 리스트</h3>
-        {/* <div>
-            <label htmlFor="roomname">방제목</label>
-            <input
-              type="text"
-              id="roomname"
-              value={roomName || ""}
-              onChange={setRoomName}
-            /> */}
-        {/* v-on:keyup.enter="createRoom" /> */}
-        {/* </div> */}
-        {/* <div>
-            <button type="button">채팅방 개설</button> */}
-        {/* @click="createRoom"> */}
-        {/* </div> */}
+        <h5 style={{ textAlign: "center" }}>
+          {sender}님이 채팅방에 입장하였습니다
+        </h5>
+        <div>
+          {messageLists?.map((msg) => (
+            <div>
+              {msg.sender} : {msg.message}
+            </div>
+          ))}
+        </div>
       </StDiv>
       <StDiv chat_chat>
         <AiOutlinePlus size="30" />
@@ -234,6 +249,7 @@ const ChatTest = () => {
           id="messages"
           value={messages}
           onChange={setMessages}
+          placeholder="채팅을 입력하세요"
         />
         <RiSendPlaneFill size="30" onClick={sendMessage} />
       </StDiv>

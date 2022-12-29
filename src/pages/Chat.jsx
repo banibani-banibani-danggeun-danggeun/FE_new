@@ -1,14 +1,9 @@
 import styled, { css } from "styled-components";
-// import ChatMessage from "../components/chatList/ChatMessage";
-// import ChatList from "../components/chatList/ChatList";
 import ChatTest from "../components/chatList/ChatTest";
-// import Stomp from "stompjs";
 
 const Chat = () => {
   return (
     <div>
-      <div></div>
-      {/* <ChatMessage /> */}
       <StDiv chat_box>
         <StDiv header_chat>
           <StH2>NickName</StH2>
@@ -36,10 +31,7 @@ const Chat = () => {
             욕설 또는 남을 비방하면 영구제명 대상입니다
           </StP>
         </StDiv>
-        {/* <ChatList /> */}
-        <div>
-          <ChatTest />
-        </div>
+        <ChatTest />
       </StDiv>
     </div>
   );

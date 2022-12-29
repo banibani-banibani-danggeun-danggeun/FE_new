@@ -41,7 +41,6 @@ const Detail = () => {
 
   const onClickEditPostHandler = (nickname) => {
     //if (isLogin === true) {
-<<<<<<< HEAD
     if (details.nickname === localStorage.getItem("nickname")) {
       //localStorage.getItem = key(nickname)로부터 data 읽기
       navigate(`/editpost/${id}`);
@@ -53,14 +52,6 @@ const Detail = () => {
       );
       // alert("타인의 게시물을 수정할 수 없습니다.");
     }
-=======
-    //if (nickname === localStorage.getItem("nickname")) {
-    ////localStorage.getItem = key(nickname)로부터 data 읽기
-    navigate(`/editpost/${id}`);
-    //} else {
-    //alert("타인의 게시물을 수정할 수 없습니다.");
-    //}
->>>>>>> b31e8585d91ca2e65e6963f1b46cf2596a3205fe
     //} else {
     //alert("로그인 후 이용 가능합니다.");
     //}

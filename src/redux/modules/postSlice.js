@@ -263,7 +263,8 @@ export const postSlice = createSlice({
       state.isLoading = false;
       // console.log(state.posts);
       // console.log(typeof action.payload);
-      const a = state.posts.filter((post) => post.id !== action.payload);
+      console.log(state.posts);
+      const a = state.posts.filter((post) => post.id === +action.payload);
       console.log(a);
       state.posts = state.posts.filter((post) => post.id !== +action.payload);
       // post.id는 number고 action.payload는 string , 같지 않아서 바로 삭제가 안됨.+ 붙임.

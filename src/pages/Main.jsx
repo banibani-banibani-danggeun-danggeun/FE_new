@@ -9,7 +9,8 @@ const Main = () => {
   const [page, setPage] = useState(1);
   const [load, setLoad] = useState(1);
   const preventRef = useRef(true);
-  const obsRef = useRef(null);
+  const obsRef = useRef(null); // 실행 중복 방지
+  const endRef = useRef(false); // 모든 포스팅 로드 완료 여부
 
   useEffect(() => {
     getList();
@@ -26,21 +27,24 @@ const Main = () => {
 
   const obsHandler = (entries) => {
     const target = entries[0];
-    if (target.isIntersecting && preventRef.current) {
+    if (!endRef.current && target.isIntersecting && preventRef.current) {
       preventRef.current = false;
       setPage((prev) => prev + 1);
     }
   };
 
   const getList = useCallback(async () => {
-    setLoad(true);
+    setLoad(true); // 글 불러와서 로딩
     const res = await axios({
       method: "GET",
-      url: `http://13.209.173.113/api/post`,
+      url: `http://jong-10.shop/api/post`,
     });
     if (res.data) {
+      if (res.data.end) {
+        //마지막 페이지
+        endRef.current = true;
+      }
       setList((prev) => [...new Set([...prev, ...res.data])]); //리스트 추가
-      preventRef.current = true;
     } else {
       console.log(res);
     }

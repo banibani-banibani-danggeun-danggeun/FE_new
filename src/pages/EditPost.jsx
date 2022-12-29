@@ -51,13 +51,7 @@ const EditPost = () => {
       Swal.fire({ icon: "error", title: "내용을 입력해주세요!" });
       // alert("내용을 입력해주세요.");
     } else {
-      dispatch(
-        __editPost([newPost, id])
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => console.log(err))
-      );
+      dispatch(__editPost([newPost, id]));
       navigate(`/detail/${id}`);
     }
 
@@ -137,12 +131,13 @@ const EditPost = () => {
           <Under>
             <IoIosArrowBack
               className="icon"
-              size="40"
+              size="36"
               color="white"
               onClick={() => navigate("/")}
+              cursor="pointer"
             />
-            <VscCircleLargeOutline className="icon" size="40" color="white" />
-            <VscMenu className="icon" size="40" color="white" />
+            <VscCircleLargeOutline className="icon" size="36" color="white" />
+            <VscMenu className="icon" size="36" color="white" />
           </Under>
         </Underline>
       </Phone>
@@ -209,7 +204,7 @@ const Priceinput = styled.input`
 `;
 const Contenttextarea = styled.textarea`
   width: 450px;
-  height: 200px;
+  height: 220px;
   border-radius: 15px;
   margin-bottom: 20px;
   font-size: 20px;
@@ -234,7 +229,9 @@ const Addbtn = styled.button`
   cursor: pointer;
   &:hover {
     border: 3px solid white;
+    font-weight: bold;
   }
+  margin-top: -10px;
 `;
 
 const Underline = styled.div`

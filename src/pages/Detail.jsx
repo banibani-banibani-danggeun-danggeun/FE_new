@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { __createRoom } from "../redux/modules/chatSlice";
+import Swal from "sweetalert2";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -26,23 +27,40 @@ const Detail = () => {
   // postslice에 details가 수정됬을 때의 경우를 넣어줌.(296-303)
 
   const onClickDeletePostHandler = () => {
-    if (isLogin === true) {
+    // if (isLogin === true) {
+    if (localStorage.getItem("nickname") === details.nickname) {
       dispatch(__deletePost(id));
-      alert("삭제 완료되었습니다.");
+      Swal.fire("삭제 완료", "삭제 완료되었습니다", "success");
+      // alert("삭제 완료되었습니다.");
       navigate(`/`);
     } else {
-      alert("로그인 후 이용 가능합니다.");
+      Swal.fire("Warning", "로그인 후 이용 가능합니다!", "warning");
+      // alert("로그인 후 이용 가능합니다.");
     }
   };
 
   const onClickEditPostHandler = (nickname) => {
     //if (isLogin === true) {
+<<<<<<< HEAD
+    if (details.nickname === localStorage.getItem("nickname")) {
+      //localStorage.getItem = key(nickname)로부터 data 읽기
+      navigate(`/editpost/${id}`);
+    } else {
+      Swal.fire(
+        "로그인 후 이용 가능합니다",
+        "타인의 게시물을 수정할 수 없습니다",
+        "warning"
+      );
+      // alert("타인의 게시물을 수정할 수 없습니다.");
+    }
+=======
     //if (nickname === localStorage.getItem("nickname")) {
     ////localStorage.getItem = key(nickname)로부터 data 읽기
     navigate(`/editpost/${id}`);
     //} else {
     //alert("타인의 게시물을 수정할 수 없습니다.");
     //}
+>>>>>>> b31e8585d91ca2e65e6963f1b46cf2596a3205fe
     //} else {
     //alert("로그인 후 이용 가능합니다.");
     //}

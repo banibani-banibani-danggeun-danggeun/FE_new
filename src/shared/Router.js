@@ -8,6 +8,8 @@ import Post from "../pages/Post";
 import Detail from "../pages/Detail";
 import Chat from "../pages/Chat";
 import EditPost from "./../pages/EditPost";
+// import Auth2RedirectHandler from "../lib/Auth2RedirectHandeler";
+import Kakao from "../pages/Kakao";
 
 const Router = () => {
   return (
@@ -21,6 +23,7 @@ const Router = () => {
           <Route path="detail/:id" element={<Detail />} />
           <Route path="chat" element={<Chat />} />
           <Route path="editpost/:id" element={<EditPost />} />
+          <Route path="/api/user/kakao/callback" element={<Kakao />}></Route>
         </Routes>
       </Layout>
     </BrowserRouter>

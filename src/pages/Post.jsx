@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { __addPost, reset } from "../redux/modules/postSlice";
 import { useNavigate, Navigate } from "react-router-dom";
@@ -29,15 +30,20 @@ const Post = () => {
   const onClickAddPostHandler = (e) => {
     e.preventDefault();
     if (addPost.title === "") {
-      alert("제목을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "제목을 입력해주세요!" });
+      // alert("제목을 입력해주세요.");
     } else if (addPost.image === "") {
-      alert("URL을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "URL을 입력해주세요!" });
+      // alert("URL을 입력해주세요.");
     } else if (addPost.location === "") {
-      alert("지역을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "지역을 입력해주세요!" });
+      // alert("지역을 입력해주세요.");
     } else if (addPost.price === "") {
-      alert("가격을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "가격을 입력해주세요!" });
+      // alert("가격을 입력해주세요.");
     } else if (addPost.content === "") {
-      alert("내용을 입력해주세요.");
+      Swal.fire({ icon: "error", title: "내용을 입력해주세요!" });
+      // alert("내용을 입력해주세요.");
     } else {
       dispatch(__addPost(addPost));
       console.log("여기");

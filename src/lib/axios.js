@@ -23,7 +23,16 @@ export const baseURL = axios.create({
 });
 
 export const chatURL = axios.create({
-  baseURL: "http://43.200.248.80/ws-stomp",
+  baseURL: "http://jaeha.shop",
+  headers: {
+    "content-type": "application/json;charset=UTF-8",
+    accept: "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
+});
+
+export const kakaoLogin = axios.create({
+  baseURL: "http://jaeha.shop/api",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -35,7 +44,9 @@ export const chatURL = axios.create({
 baseURL.interceptors.request.use((config) => {
   if (config.headers === undefined) return;
   const token = localStorage.getItem("id");
-  config.headers["Authorization"] = `${token}`;
+  const auth = localStorage.getItem("Authorization");
+  config.headers["Authorization"] = token === null ? `${auth}` : `${token}`;
+  // 혹시 3항 연산자가 안먹히면 수정
   return config;
 });
 
@@ -54,6 +65,8 @@ export const apis = {
   checkUserName: (username) => instance.get(`/user/idcheck/${username}`),
   checkNickname: (nickname) => instance.get(`/user/nicknamecheck/${nickname}`),
 
+  kakaoLigin: (code) => kakaoLogin.get(`/user/kakao/callback?code=${code}`),
+
   // 게시글 관련
   getPost: () => baseURL.get("/post"),
   getIdPost: (id) => baseURL.get(`/post/${id}`),
@@ -61,6 +74,9 @@ export const apis = {
   deletePost: (id) => baseURL.delete(`/post/${id}`),
   editPost: (id, post) => baseURL.patch(`/post/${id}`, post),
 
-  getChatRoom: () => chatURL.get("/chat/rooms"),
-  chatCreate: () => chatURL.post("/chat/room"),
+  getChatRoom: () => chatURL.get("/chat/room"),
+  getMessage: (roomId) => chatURL.get(`/chat/getmessage/${roomId}`),
+  createRoom: (postId) => chatURL.post(`/chat/room?postId=${postId}`),
+  // enterRoom: (roomId) => chatURL.get(`/chat/room/enter/${roomId}`),
+  // findRoom: (roomId) => chatURL.get(`/room/${roomId}`),
 };

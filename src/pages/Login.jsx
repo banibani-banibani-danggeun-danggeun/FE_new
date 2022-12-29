@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useInput } from "../lib/utils/useInput";
 import { __postLogin } from "../redux/modules/loginSlice";
 import { Link } from "react-router-dom";
+import { KAKAO_AUTH_URL } from "../lib/Auth";
 
 const Login = () => {
   const [username, setUserName] = useInput();
@@ -59,11 +60,7 @@ const Login = () => {
                 </StButton>
               </form>
               <StLine />
-              <StA
-                href="https://kauth.kakao.com/oauth/authorize?client_id=d6c5b10cf544ae8fcc0cbb0bbc530328&redirect_uri=http://localhost:3000/api/user/kakao/callback&response_type=code"
-                target="_blank"
-                style={{ textDecoration: "none" }}
-              >
+              <StA href={KAKAO_AUTH_URL} style={{ textDecoration: "none" }}>
                 <StAddButton3>카카오 로그인</StAddButton3>
               </StA>
               <Link to="/signup" style={{ textDecoration: "none" }}>

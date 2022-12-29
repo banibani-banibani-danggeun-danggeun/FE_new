@@ -5,7 +5,6 @@ import styled from "styled-components";
 import PostingBlock from "../components/main/PostingBlock";
 
 const Main = () => {
-
   const [list, setList] = useState([]);
   const [page, setPage] = useState(1);
   const [load, setLoad] = useState(1);
@@ -20,8 +19,6 @@ const Main = () => {
       observer.disconnect();
     };
   }, []);
-
-
 
   useEffect(() => {
     getList();
